@@ -7,7 +7,7 @@
     <groupId>be.objectify</groupId>
     <artifactId>objectify-led</artifactId>
     <packaging>jar</packaging>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <name>objectify-led</name>
     <url>http://www.objectify.be/objectify-led</url>
     <organization>

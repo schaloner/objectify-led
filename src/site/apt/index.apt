@@ -1,0 +1,84 @@
+objectify-led
+
+ objectify-led is a Java library for binding properties from arbitrary sources at runtime using annotations.
+
+ It's meant as a lightweight solution for removing boilerplate code, and is ideal for binding properties from the
+system or properties files without the need to manually check for their existence or convert them to the correct type.
+
+ Instead of having chunks of code such as
+
++--
+public class Foo
+{
+    private static String BLAH = "default-value";
+
+    private String myString;
+
+    private int myInt = -1;
+
+    public static void main(String[] args)
+    {
+        if (System.getProperty("blah.value) != null)
+        {
+            BLAH = System.getProperty("blah.value");
+        }
+
+        Foo foo = new Foo();
+        if (System.getProperty("mystring.value) != null)
+        {
+            foo.myString = System.getProperty("mystring.value");
+        }
+        if (System.getProperty("myint.value) != null)
+        {
+            try
+            {
+                String intValue = System.getProperty("myint.value");
+                foo.myInt = Integer.parseInt(intValue;
+            }
+            catch (NumberFormatException e)
+            {
+                ...
+            }
+        }
+    }
+...
+}
++--
+
+ you can instead use objectify-led to bind the properties for you :
+
++--
+public class Foo
+{
+    @Property("blah.value");
+    private static String BLAH = "default-value";
+
+    @Property("mystring.value");
+    private String myString;
+
+    @Property("myint.value");
+    private int myInt = -1;
+
+    public static void main(String[] args)
+    {
+        Foo foo = new Foo();
+        new PropertySetter().process(foo);
+    }
+    ...
+}
++--
+
+
+ By default, Strings and all primitive/wrapper classes are handled.  If you wish to convert a property value into a
+specific class, you just need to plug in your own object factory.
+
+ Additionally, the source of the properties is completely up to you.  By default, properties are taken from the system
+environment and any Properties objects you may have plugged in; custom property contexts can be used to provide a
+facade to more complex value stores.
+
+ Static values are handled in two ways. If an instance of a class is processed, both its instance and static members
+are populated if necessary.  If a class is processed, just the static members are populated (what with the lack of an
+instance and everything!).
+
+ Final properties- despite the ability to do so via reflection – are not set.  This may or may not change depending
+on feedback.

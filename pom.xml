@@ -140,7 +140,9 @@
     </reporting>
 
     <scm>
-        <url>http://objectify-led.googlecode.com/svn/trunk/</url>
+        <url>scm:svn:http://objectify-led.googlecode.com/svn/trunk/</url>
+        <connection>scm:svn:http://objectify-led.googlecode.com/svn/trunk/</connection>
+        <developerConnection>scm:svn:http://objectify-led.googlecode.com/svn/trunk/</developerConnection>
     </scm>
 
     <issueManagement>
@@ -152,7 +154,7 @@
         <developer>
             <name>Steve Chaloner</name>
             <id>smc</id>
-            <email>openNOSPAMsource@objectify.be</email>
+            <email>opensource@objectify.be</email>
             <organization>Objectify</organization>
             <organizationUrl>http://www.objectify.be</organizationUrl>
 

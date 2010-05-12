@@ -317,6 +317,27 @@ public class PropertySetterTest
         System.clearProperty("string.property");
     }
 
+    enum TestEnum { A, B }
+
+    @Test
+    public void testEnum()
+    {
+        class EnumTestObject
+        {
+            @Property("enum.property")
+            private TestEnum value;
+        }
+        EnumTestObject o = new EnumTestObject();
+        System.setProperty("enum.property", "A");
+        propertySetter.setAutomaticEnumAssignment(true);
+        propertySetter.process(o);
+        Assert.assertEquals(TestEnum.A,
+                            o.value);
+
+        propertySetter.setAutomaticEnumAssignment(false);
+        System.clearProperty("string.property");
+    }
+
     @Test
     public void testMultipleProperties()
     {

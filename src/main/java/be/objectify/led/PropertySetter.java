@@ -17,6 +17,7 @@ package be.objectify.led;
 
 import be.objectify.led.util.ContractUtils;
 import be.objectify.led.util.StringUtils;
+import be.objectify.led.factory.EnumFactory;
 
 import org.apache.log4j.Logger;
 
@@ -34,6 +35,8 @@ public class PropertySetter
     private final ObjectFactoryRegistry objectFactoryRegistry;
 
     private final PropertyContext propertyContext;
+
+    private boolean automaticEnumAssignment = false;
 
     /**
      * Initialses a new instance with a default property context and object factory registry.
@@ -142,6 +145,19 @@ public class PropertySetter
                          field,
                          objectFactory.createObject(propertyValue));
             }
+            else if (automaticEnumAssignment && Enum.class.isAssignableFrom(type))
+            {
+                Class<? extends Enum> enumType = (Class<? extends Enum>)field.getType();
+                ObjectFactory factory = new EnumFactory(enumType);
+                setValue(target,
+                         field,
+                         factory.createObject(propertyValue));
+            }
+            else
+            {
+                LOGGER.info(String.format("No factory available for type [%s]",
+                                          type));
+            }
         }
     }
 
@@ -192,5 +208,15 @@ public class PropertySetter
         }
 
         return propertyValue;
+    }
+
+    public boolean isAutomaticEnumAssignment()
+    {
+        return automaticEnumAssignment;
+    }
+
+    public void setAutomaticEnumAssignment(boolean automaticEnumAssignment)
+    {
+        this.automaticEnumAssignment = automaticEnumAssignment;
     }
 }

@@ -20,6 +20,12 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import be.objectify.led.factory.type.EnumTypeFactory;
+import be.objectify.led.factory.type.ListTypeFactory;
+
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Test cases for all default object factory property types.
  *
@@ -32,7 +38,12 @@ public class PropertySetterTest
     @Before
     public void before()
     {
-        propertySetter = new PropertySetter();
+        TypeFactoryRegistry typeFactoryRegistry = new TypeFactoryRegistry();
+        FactoryResolver factoryResolver = new DefaultFactoryResolver(typeFactoryRegistry);
+        typeFactoryRegistry.register(new EnumTypeFactory());
+        typeFactoryRegistry.register(new ListTypeFactory(factoryResolver));
+        propertySetter = new PropertySetter(factoryResolver,
+                                            new DefaultPropertyContext());
     }
 
     @After
@@ -317,7 +328,11 @@ public class PropertySetterTest
         System.clearProperty("string.property");
     }
 
-    enum TestEnum { A, B }
+    enum TestEnum
+    {
+        A,
+        B
+    }
 
     @Test
     public void testEnum()
@@ -329,13 +344,83 @@ public class PropertySetterTest
         }
         EnumTestObject o = new EnumTestObject();
         System.setProperty("enum.property", "A");
-        propertySetter.setAutomaticEnumAssignment(true);
         propertySetter.process(o);
         Assert.assertEquals(TestEnum.A,
                             o.value);
 
-        propertySetter.setAutomaticEnumAssignment(false);
         System.clearProperty("string.property");
+    }
+
+    @Test
+    public void testStringList()
+    {
+        class StringListTestObject
+        {
+            @Property("list.string.property")
+            @CollectionType(String.class)
+            private List<String> value;
+        }
+        StringListTestObject o = new StringListTestObject();
+        System.setProperty("list.string.property", "A B C");
+        propertySetter.process(o);
+        Assert.assertEquals(Arrays.asList("A", "B", "C"),
+                            o.value);
+
+        System.clearProperty("list.string.property");
+    }
+
+    @Test
+    public void testIntegerList()
+    {
+        class StringListTestObject
+        {
+            @Property("list.integer.property")
+            @CollectionType(Integer.class)
+            private List<Integer> value;
+        }
+        StringListTestObject o = new StringListTestObject();
+        System.setProperty("list.integer.property", "-4532 1 45 34587");
+        propertySetter.process(o);
+        Assert.assertEquals(Arrays.asList(-4532, 1, 45, 34587),
+                            o.value);
+
+        System.clearProperty("list.integer.property");
+    }
+
+    @Test
+    public void testIntList()
+    {
+        class StringListTestObject
+        {
+            @Property("list.int.property")
+            @CollectionType(int.class)
+            private List<Integer> value;
+        }
+        StringListTestObject o = new StringListTestObject();
+        System.setProperty("list.int.property", "-4532 1 45 34587");
+        propertySetter.process(o);
+        Assert.assertEquals(Arrays.asList(-4532, 1, 45, 34587),
+                            o.value);
+
+        System.clearProperty("list.int.property");
+    }
+
+    @Test
+    public void testEnumList()
+    {
+        class StringListTestObject
+        {
+            @Property("list.enum.property")
+            @CollectionType(TestEnum.class)
+            private List<TestEnum> value;
+        }
+        StringListTestObject o = new StringListTestObject();
+        System.setProperty("list.enum.property", "A B");
+        propertySetter.process(o);
+        Assert.assertEquals(Arrays.asList(TestEnum.A, TestEnum.B),
+                            o.value);
+
+        System.clearProperty("list.enum.property");
     }
 
     @Test

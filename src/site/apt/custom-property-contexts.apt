@@ -1,0 +1,76 @@
+Custom property contexts
+
+  be.objectify.led.PropertyContext defines the access point to mapped information.  For example, the default implementation looks
+at system properties and any provided Properties objects to meet the requirements of the PropertyContext#getValue method:
+
++--
+public class DefaultPropertyContext
+{
+    ....
+
+    /** @{inheritDoc} */
+    public String getValue(String propertyName)
+    {
+        String value = null;
+
+        if (properties.containsKey(propertyName))
+        {
+            value = properties.getProperty(propertyName);
+        }
+
+        String property = System.getProperty(propertyName);
+        if (!StringUtils.isEmpty(property))
+        {
+            value = property;
+        }
+
+        if (value != null && LOGGER.isDebugEnabled())
+        {
+            LOGGER.debug(String.format("Found value [%s] for property [%s]",
+                                       value,
+                                       propertyName));
+        }
+
+        return value;
+    }
+}
++--
+
+  The underlying storage of a property context is completely arbitrary;  in the following example, a map is used:
+
++--
+public class CustomPropertyContext
+{
+    private final Map<String, String> values;
+
+    public CustomPropertyContext(Map<String, String> values)
+    {
+        this.values = values;
+    }
+
+    /** @{inheritDoc} */
+    public String getValue(String propertyName)
+    {
+        return values.get(propertyName);
+    }
+}
++--
+
+  To use the custom property context, provide it as a constructor parameter to a PropertySetter:
+
++--
+public class Foo
+{
+    ...
+
+    public String getValue(String propertyName)
+    {
+        Map<String, String> values = new HashMap<String, String>();
+        PropertyContext propertyContext = new CustomPropertyContext(values);
+        PropertySetter propertySetter = new PropertySetter(propertyContext);
+        ...
+    }
+
+    ...
+}
++--

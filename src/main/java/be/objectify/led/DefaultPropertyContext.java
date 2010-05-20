@@ -43,6 +43,7 @@ public class DefaultPropertyContext implements PropertyContext
         }
     }
 
+    /** {@inheritDoc} */
     public String getValue(String propertyName)
     {
         String value = null;

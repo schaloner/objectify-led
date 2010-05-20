@@ -1,0 +1,51 @@
+Basic usage
+
+  objectify-led is designed to be pluggable to allow custom components to replace or augment existing ones.  However, it also provides a
+  reasonable amount of functionality straight out of the box.
+
+  The key to using objectify-led is the be.objectify.led.Property annotation.  This allows you to mark instance or static variables
+as eligible for automatic binding, e.g.
+
++--
+public class Person
+{
+    @Property("person.name")
+    private String name;
+
+    @Property("person.age")
+    private int age;
+
+    ...
+}
++--
+
+  An instance of be.objectify.led.PropertySetter processing a Person object would look in its be.objectify.led.PropertyContext for values
+mapped to person.name and person.age.  The default implementation of PropertyContext looks at the system properties and any Properties
+objects you may have given it, but implementing your own PropertyContext is simple - see {{{custom-property-contexts.html}custom property contexts}}.
+
++--
+public interface PropertyContext
+{
+    /**
+     * Gets the named propety from the context.
+     *
+     * @param propertyName the name of the property
+     * @return the value mapped to the property name, or null if no value exists
+     */
+    String getValue(String propertyName);
+}
++--
+
+  objectify-led handles conversion of values to the correct type automatically, and all primitive and primitive wrapper (Integer, Float, etc)
+types, and Strings,  are supported out of the box.  See "Advanced usage" for details on supporting custom types.
+
+  Finally, to convert and bind values to model properties, PropertySetter is the entry point:
+  
++--
+  ..
+  Person person = new Person();
+  new PropertySetter().process(person);
+  ..
++--
+
+  This will process each variable marked with @Property and bind it to whatever is provided by the PropertyContext.

@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <project name="objectify-led">
-  <bannerLeft>
-    <name>objectify-led</name>
-    <href>http://www.objectify.be/objectify-led</href>
-  </bannerLeft>
-  <bannerRight>
-    <name>Objectify</name>
-    <href>http://www.objectify.be</href>
-  </bannerRight>
-  <body>
-    <links>
-      <item name="Objectify" href="http://www.objectify.be/"/>
-    </links>
+    <bannerLeft>
+        <name>objectify-led</name>
+        <href>http://www.objectify.be/objectify-led</href>
+    </bannerLeft>
+    <bannerRight>
+        <name>Objectify</name>
+        <href>http://www.objectify.be</href>
+    </bannerRight>
+    <body>
+        <links>
+            <item name="Objectify" href="http://www.objectify.be/"/>
+        </links>
 
-    <menu name="objectify-led">
-      <item name="Introduction" href="index.html"/>
-      <item name="Download" href="download.html"/>
-    </menu>
+        <menu name="objectify-led">
+            <item name="Introduction" href="index.html"/>
+            <item name="Basic usage" href="basic-usage.html"/>
+            <item name="Custom property contexts" href="custom-property-contexts.html"/>
+            <item name="Custom type handling" href="custom-type-handling.html"/>
+            <item name="Download" href="download.html"/>
+        </menu>
 
-    <menu ref="reports"/>
+        <menu ref="reports"/>
 
-  </body>
+    </body>
 </project>

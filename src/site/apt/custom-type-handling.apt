@@ -1,0 +1,105 @@
+Custom type handling
+
+  objectify-led supports pluggable factories to allow custom types to be created
+
+* Object factories
+
+  Object factories convert Strings to whatever type the factory handles.  Various object factories come with objectify-led to support primitives,
+primitive wrappers and Strings.  These are registered automatically with ObjectFactoryRegistry instances.
+
++--
+public interface ObjectFactory<T>
+{
+    T createObject(String propertyValue);
+
+    Class<T> getBoundClass();
+}
++--
+
+  For example, to support java.util.Date you could implement DateFactory:
+
++--
+import java.util.Date;
+import be.objectify.led.ObjectFactory;
+
+public class DateFactory implements ObjectFactory<Date>
+{
+    public Date createObject(String propertyValue)
+    {
+        return new SimpleDateFormat().parse(propertyValue);
+    }
+
+    public Class<Date> getBoundClass()
+    {
+        return Date.class;
+    }
+}
++--
+
+  To register the factory with a PropertySetter, it needs to be added to an ObjectFactoryRegistry, which forms part of the FactoryResolver:
+
++--
+public class Foo
+{
+    ...
+
+    public String getValue(String propertyName)
+    {
+        ObjectFactoryRegistry ofr = new ObjectFactoryRegistry();
+        ofr.register(new DateFactory());
+        FactoryResolver factoryResolver = new DefaultFactoryResolver(ofr);
+
+        PropertySetter propertySetter = new PropertySetter(factoryResolver);
+        ...
+    }
+
+    ...
+}
++--
+
+* Type factories
+
+  Type factories are used to create complex objects, for example Lists or Maps populated with the correct value types.
+Due to Java's implementation of generics with erasure, necessary information isn't available at runtime and so a couple
+of additional annotations may be used to provide information if required:
+
++--
+public class Foo
+{
+    @Property("foo.bar")
+    @CollectionType(Integer.class)
+    private List<Integer> myList;
+
+    @Property("person.age")
+    @MapTypes(key=Double.class, value=String.class)
+    private Map<Double, String> myMap;
+
+    ...
+}
++--
+
+Furnished with this information, objectify-led can create collections and maps and use object factories to create values
+to put inside them.
+
+By default, no type factories are registered with TypeFactoryRegistry.  However, factories for Lists, Sets, Maps and
+Enums are provided and can be registered as needed; additional factories can be added by implementing the TypeFactory
+interface.
+
++--
+public class Foo
+{
+    ...
+
+    public String getValue(String propertyName)
+    {
+        TypeFactoryRegistry tfr = new TypeFactoryRegistry();
+        tfr.register(new EnumTypeFactory());
+        FactoryResolver factoryResolver = new DefaultFactoryResolver(tfr);
+
+        PropertySetter propertySetter = new PropertySetter(factoryResolver);
+        ...
+    }
+
+    ...
+}
++--

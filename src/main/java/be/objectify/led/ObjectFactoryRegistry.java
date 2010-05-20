@@ -15,15 +15,15 @@
  */
 package be.objectify.led;
 
-import be.objectify.led.factory.BooleanFactory;
-import be.objectify.led.factory.ByteFactory;
-import be.objectify.led.factory.CharacterFactory;
-import be.objectify.led.factory.DoubleFactory;
-import be.objectify.led.factory.FloatFactory;
-import be.objectify.led.factory.IntegerFactory;
-import be.objectify.led.factory.LongFactory;
-import be.objectify.led.factory.ShortFactory;
-import be.objectify.led.factory.StringFactory;
+import be.objectify.led.factory.object.BooleanFactory;
+import be.objectify.led.factory.object.ByteFactory;
+import be.objectify.led.factory.object.CharacterFactory;
+import be.objectify.led.factory.object.DoubleFactory;
+import be.objectify.led.factory.object.FloatFactory;
+import be.objectify.led.factory.object.IntegerFactory;
+import be.objectify.led.factory.object.LongFactory;
+import be.objectify.led.factory.object.ShortFactory;
+import be.objectify.led.factory.object.StringFactory;
 import be.objectify.led.util.ContractUtils;
 
 import org.apache.log4j.Logger;
@@ -149,13 +149,13 @@ public class ObjectFactoryRegistry
         {
             if (factory != null)
             {
-                LOGGER.debug(String.format("Found factory [%s] for class [%s]",
+                LOGGER.debug(String.format("Found object factory [%s] for class [%s]",
                                            factory,
                                            clazz.getCanonicalName()));
             }
             else
             {
-                LOGGER.debug("Could not find factory for " + clazz.getCanonicalName());
+                LOGGER.debug("Could not find object factory for " + clazz.getCanonicalName());
             }
         }
 

@@ -78,10 +78,10 @@ public class Foo
 }
 +--
 
-Furnished with this information, objectify-led can create collections and maps and use object factories to create values
+  Furnished with this information, objectify-led can create collections and maps and use object factories to create values
 to put inside them.
 
-By default, no type factories are registered with TypeFactoryRegistry.  However, factories for Lists, Sets, Maps and
+  By default, no type factories are registered with TypeFactoryRegistry.  However, factories for Lists, Sets, Maps and
 Enums are provided and can be registered as needed; additional factories can be added by implementing the TypeFactory
 interface.
 

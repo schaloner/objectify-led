@@ -22,19 +22,19 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Indicates the content class of a collection.
+ * Indicates the generic parameter types of a class.
  *
  * @author Steve Chaloner
  */
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface CollectionType
+public @interface GenericTypes
 {
     /**
-     * The content class of the collection.
+     * The generic parameter types of the class.
      *
-     * @return the content class
+     * @return the generic parameter types of the class
      */
-    public abstract Class value();
+    public abstract Class[] value();
 }

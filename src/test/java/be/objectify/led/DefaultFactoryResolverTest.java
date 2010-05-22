@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class DefaultFactoryResolverTest
 {
-    @CollectionType(Boolean.class)
+    @GenericTypes(Boolean.class)
     private List<Boolean> list;
 
     @Test

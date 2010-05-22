@@ -19,8 +19,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import be.objectify.led.DefaultFactoryResolver;
-import be.objectify.led.MapTypes;
 import be.objectify.led.TypeFactoryRegistry;
+import be.objectify.led.GenericTypes;
 import be.objectify.led.factory.type.MapTypeFactory;
 
 import java.lang.reflect.Field;
@@ -33,7 +33,7 @@ import java.util.Map;
  */
 public class MapFactoryTest extends AbstractObjectFactoryTest
 {
-    @MapTypes(key = String.class, value = Integer.class)
+    @GenericTypes({String.class, Integer.class})
     private Map<String, Integer> map;
 
     @Override

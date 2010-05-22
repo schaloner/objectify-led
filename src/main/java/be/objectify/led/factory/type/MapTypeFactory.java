@@ -17,9 +17,8 @@ package be.objectify.led.factory.type;
 
 import org.apache.log4j.Logger;
 
-import be.objectify.led.CollectionType;
 import be.objectify.led.FactoryResolver;
-import be.objectify.led.MapTypes;
+import be.objectify.led.GenericTypes;
 import be.objectify.led.ObjectFactory;
 import be.objectify.led.TypeFactory;
 import be.objectify.led.factory.object.MapFactory;
@@ -92,13 +91,13 @@ public class MapTypeFactory implements TypeFactory<Map>
     }
 
     public Class[] determineClassType(Class fieldType,
-                                      CollectionType collectionType,
-                                      MapTypes mapTypes)
+                                      GenericTypes genericTypes)
     {
-        if (mapTypes == null)
+        if (genericTypes == null || genericTypes.value().length != 2)
         {
-            throw new RuntimeException("MapTypes annotation required to determine Map key:value types");
+            throw new RuntimeException("GenericTypes(key class, value class) annotation required to determine Map key:value types");
         }
-        return new Class[]{ mapTypes.key(), mapTypes.value() };
+        Class[] classes = genericTypes.value();
+        return new Class[]{ classes[0], classes[1] };
     }
 }

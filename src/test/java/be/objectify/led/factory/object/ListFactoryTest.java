@@ -20,7 +20,7 @@ import org.junit.Assert;
 
 import be.objectify.led.TypeFactoryRegistry;
 import be.objectify.led.DefaultFactoryResolver;
-import be.objectify.led.CollectionType;
+import be.objectify.led.GenericTypes;
 import be.objectify.led.factory.type.ListTypeFactory;
 
 import java.util.List;
@@ -33,7 +33,7 @@ import java.lang.reflect.Field;
  */
 public class ListFactoryTest extends AbstractObjectFactoryTest
 {
-    @CollectionType(String.class)
+    @GenericTypes(String.class)
     private List<String> list;
 
     @Override

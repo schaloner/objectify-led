@@ -67,11 +67,11 @@ of additional annotations may be used to provide information if required:
 public class Foo
 {
     @Property("foo.bar")
-    @CollectionType(Integer.class)
+    @GenericTypes(Integer.class)
     private List<Integer> myList;
 
     @Property("person.age")
-    @MapTypes(key=Double.class, value=String.class)
+    @GenericTypes({Double.class, String.class})
     private Map<Double, String> myMap;
 
     ...

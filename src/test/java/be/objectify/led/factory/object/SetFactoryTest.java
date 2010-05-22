@@ -20,11 +20,9 @@ import org.junit.Assert;
 
 import be.objectify.led.TypeFactoryRegistry;
 import be.objectify.led.DefaultFactoryResolver;
-import be.objectify.led.CollectionType;
-import be.objectify.led.factory.type.ListTypeFactory;
+import be.objectify.led.GenericTypes;
 import be.objectify.led.factory.type.SetTypeFactory;
 
-import java.util.List;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.HashSet;
@@ -36,7 +34,7 @@ import java.lang.reflect.Field;
  */
 public class SetFactoryTest extends AbstractObjectFactoryTest
 {
-    @CollectionType(String.class)
+    @GenericTypes(String.class)
     private Set<String> set;
 
     @Override

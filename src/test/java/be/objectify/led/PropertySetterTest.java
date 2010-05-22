@@ -357,7 +357,7 @@ public class PropertySetterTest
         class StringListTestObject
         {
             @Property("list.string.property")
-            @CollectionType(String.class)
+            @GenericTypes(String.class)
             private List<String> value;
         }
         StringListTestObject o = new StringListTestObject();
@@ -375,7 +375,7 @@ public class PropertySetterTest
         class StringListTestObject
         {
             @Property("list.integer.property")
-            @CollectionType(Integer.class)
+            @GenericTypes(Integer.class)
             private List<Integer> value;
         }
         StringListTestObject o = new StringListTestObject();
@@ -393,7 +393,7 @@ public class PropertySetterTest
         class StringListTestObject
         {
             @Property("list.int.property")
-            @CollectionType(int.class)
+            @GenericTypes(int.class)
             private List<Integer> value;
         }
         StringListTestObject o = new StringListTestObject();
@@ -411,7 +411,7 @@ public class PropertySetterTest
         class StringListTestObject
         {
             @Property("list.enum.property")
-            @CollectionType(TestEnum.class)
+            @GenericTypes(TestEnum.class)
             private List<TestEnum> value;
         }
         StringListTestObject o = new StringListTestObject();

@@ -31,6 +31,5 @@ public interface TypeFactory<T>
     Class<T> getBoundClass();
 
     Class[] determineClassType(Class fieldType,
-                               CollectionType collectionsType,
-                               MapTypes mapTypes);
+                               GenericTypes genericTypes);
 }

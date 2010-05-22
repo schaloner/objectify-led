@@ -15,9 +15,8 @@
  */
 package be.objectify.led.factory.type;
 
-import be.objectify.led.CollectionType;
+import be.objectify.led.GenericTypes;
 import be.objectify.led.FactoryResolver;
-import be.objectify.led.MapTypes;
 import be.objectify.led.ObjectFactory;
 import be.objectify.led.TypeFactory;
 import be.objectify.led.factory.object.SetFactory;
@@ -78,14 +77,13 @@ public class SetTypeFactory implements TypeFactory<Set>
     }
 
     public Class[] determineClassType(Class fieldType,
-                                      CollectionType collectionType,
-                                      MapTypes mapTypes)
+                                      GenericTypes genericTypes)
     {
-        if (collectionType == null)
+        if (genericTypes == null || genericTypes.value().length != 1)
         {
-            throw new RuntimeException("CollectionType annotation required to determine Collection value type");
+            throw new RuntimeException("GenericTypes(value class) annotation required to determine Collection value type");
         }
 
-        return new Class[]{ collectionType.value() };
+        return genericTypes.value();
     }
 }

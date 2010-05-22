@@ -61,14 +61,12 @@ public class DefaultFactoryResolver implements FactoryResolver
         ObjectFactory objectFactory = objectFactoryRegistry.getFactory(type);
         if (objectFactory == null)
         {
-            CollectionType collectionType = field.getAnnotation(CollectionType.class);
-            MapTypes mapTypes = field.getAnnotation(MapTypes.class);
+            GenericTypes genericTypes = field.getAnnotation(GenericTypes.class);
             TypeFactory factory = typeFactoryRegistry.getFactory(type);
             if (factory != null)
             {
                 objectFactory = factory.createObjectFactory(factory.determineClassType(type,
-                                                                                       collectionType,
-                                                                                       mapTypes),
+                                                                                       genericTypes),
                                                             field);
             }
         }

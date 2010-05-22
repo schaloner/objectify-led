@@ -15,8 +15,7 @@
  */
 package be.objectify.led.factory.type;
 
-import be.objectify.led.CollectionType;
-import be.objectify.led.MapTypes;
+import be.objectify.led.GenericTypes;
 import be.objectify.led.TypeFactory;
 import be.objectify.led.factory.object.EnumFactory;
 
@@ -39,8 +38,7 @@ public class EnumTypeFactory implements TypeFactory<Enum>
     }
 
     public Class[] determineClassType(Class fieldType,
-                                      CollectionType collectionsType,
-                                      MapTypes mapTypes)
+                                      GenericTypes genericTypes)
     {
         return new Class[]{ fieldType };
     }

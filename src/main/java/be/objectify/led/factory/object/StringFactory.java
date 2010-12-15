@@ -15,7 +15,6 @@
  */
 package be.objectify.led.factory.object;
 
-import be.objectify.led.ObjectFactory;
 import be.objectify.led.util.StringUtils;
 
 /**
@@ -23,10 +22,11 @@ import be.objectify.led.util.StringUtils;
  * 
  * @author Steve Chaloner
  */
-public class StringFactory implements ObjectFactory<String>
+public class StringFactory extends AbstractObjectFactory<String>
 {
     /** {@inheritDoc} */
-    public String createObject(String propertyValue)
+    public String createObject(String propertyName,
+                               String propertyValue)
     {
         return StringUtils.isEmpty(propertyValue) ? null : propertyValue;
     }

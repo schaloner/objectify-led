@@ -15,7 +15,6 @@
  */
 package be.objectify.led.factory.object;
 
-import be.objectify.led.ObjectFactory;
 import be.objectify.led.util.StringUtils;
 
 /**
@@ -23,12 +22,13 @@ import be.objectify.led.util.StringUtils;
  *
  * @author Steve Chaloner
  */
-public class CharacterFactory implements ObjectFactory<Character>
+public class CharacterFactory extends AbstractObjectFactory<Character>
 {
     /**
      * {@inheritDoc}
      */
-    public Character createObject(String propertyValue)
+    public Character createObject(String propertyName,
+                                  String propertyValue)
     {
         Character c = null;
 

@@ -15,14 +15,13 @@
  */
 package be.objectify.led.factory.type;
 
-import org.apache.log4j.Logger;
-
 import be.objectify.led.FactoryResolver;
 import be.objectify.led.GenericTypes;
 import be.objectify.led.ObjectFactory;
 import be.objectify.led.TypeFactory;
 import be.objectify.led.factory.object.MapFactory;
 import be.objectify.led.util.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -52,7 +51,8 @@ public class MapTypeFactory implements TypeFactory<Map>
                               field,
                               factoryResolver)
         {
-            protected Map parse(String propertyValue,
+            protected Map parse(String propertyName,
+                                String propertyValue,
                                 ObjectFactory keyObjectFactory,
                                 ObjectFactory valueObjectFactory)
             {
@@ -65,8 +65,10 @@ public class MapTypeFactory implements TypeFactory<Map>
                         String[] strings = s.split(":");
                         if (strings.length == 2)
                         {
-                            map.put(keyObjectFactory.createObject(strings[0]),
-                                    valueObjectFactory.createObject(strings[1]));
+                            map.put(keyObjectFactory.createObject(propertyName,
+                                                                  strings[0]),
+                                    valueObjectFactory.createObject(propertyName,
+                                                                    strings[1]));
                         }
                         else
                         {

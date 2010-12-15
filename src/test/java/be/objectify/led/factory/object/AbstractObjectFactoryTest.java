@@ -15,13 +15,12 @@
  */
 package be.objectify.led.factory.object;
 
+import be.objectify.led.DefaultFactoryResolver;
+import be.objectify.led.FactoryResolver;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import be.objectify.led.DefaultFactoryResolver;
-import be.objectify.led.FactoryResolver;
 
 import java.lang.reflect.Field;
 
@@ -48,28 +47,32 @@ public abstract class AbstractObjectFactoryTest
     public void testDefaultFactory_nullPropertyValue() throws Exception
     {
         Assert.assertNull(factoryResolver.resolveFactory(getTargetClass(),
-                                                         getField()).createObject(null));
+                                                         getField()).createObject("propertyName",
+                                                                                  null));
     }
 
     @Test
     public void testDefaultFactory_zeroLengthPropertyValue() throws Exception
     {
         Assert.assertNull(factoryResolver.resolveFactory(getTargetClass(),
-                                                         getField()).createObject(""));
+                                                         getField()).createObject("propertyName",
+                                                                                  ""));
     }
 
     @Test
     public void testDefaultFactory_emptyPropertyValue() throws Exception
     {
         Assert.assertNull(factoryResolver.resolveFactory(getTargetClass(),
-                                                         getField()).createObject("     "));
+                                                         getField()).createObject("propertyName",
+                                                                                  "     "));
     }
 
     @Test
     public void testDefaultFactory_populatedPropertyValue() throws Exception
     {
         Object result = factoryResolver.resolveFactory(getTargetClass(),
-                                                       getField()).createObject(getPropertyValue());
+                                                       getField()).createObject("propertyName",
+                                                                                  getPropertyValue());
         Assert.assertEquals(getResult(),
                             result);
     }

@@ -7,7 +7,7 @@
     <groupId>be.objectify</groupId>
     <artifactId>objectify-led</artifactId>
     <packaging>jar</packaging>
-    <version>1.1.0</version>
+    <version>1.2</version>
     <name>objectify-led</name>
     <url>http://www.objectify.be/objectify-led</url>
     <organization>
@@ -89,7 +89,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.7</version>
+            <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
     </dependencies>

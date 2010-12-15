@@ -15,18 +15,17 @@
  */
 package be.objectify.led.factory.object;
 
-import org.junit.Test;
-import org.junit.Assert;
-
-import be.objectify.led.TypeFactoryRegistry;
 import be.objectify.led.DefaultFactoryResolver;
 import be.objectify.led.GenericTypes;
+import be.objectify.led.TypeFactoryRegistry;
 import be.objectify.led.factory.type.SetTypeFactory;
+import org.junit.Assert;
+import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.Set;
-import java.util.HashSet;
 import java.lang.reflect.Field;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Steve Chaloner
@@ -49,7 +48,8 @@ public class SetFactoryTest extends AbstractObjectFactoryTest
     public void testDefaultFactory_nullPropertyValue() throws Exception
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
-                                                  getField()).createObject(null);
+                                                  getField()).createObject("propertyName",
+                                                                           null);
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof Set);
         Set set = (Set)o;
@@ -60,7 +60,8 @@ public class SetFactoryTest extends AbstractObjectFactoryTest
     public void testDefaultFactory_zeroLengthPropertyValue() throws Exception
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
-                                                  getField()).createObject("");
+                                                  getField()).createObject("propertyName",
+                                                                           "");
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof Set);
         Set set = (Set)o;
@@ -71,7 +72,8 @@ public class SetFactoryTest extends AbstractObjectFactoryTest
     public void testDefaultFactory_emptyPropertyValue() throws Exception
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
-                                                  getField()).createObject("    ");
+                                                  getField()).createObject("propertyName",
+                                                                           "    ");
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof Set);
         Set set = (Set)o;

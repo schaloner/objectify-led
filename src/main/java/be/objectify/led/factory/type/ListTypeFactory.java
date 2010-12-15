@@ -15,14 +15,13 @@
  */
 package be.objectify.led.factory.type;
 
-import org.apache.log4j.Logger;
-
 import be.objectify.led.FactoryResolver;
 import be.objectify.led.GenericTypes;
 import be.objectify.led.ObjectFactory;
 import be.objectify.led.TypeFactory;
 import be.objectify.led.factory.object.ListFactory;
 import be.objectify.led.util.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -51,7 +50,8 @@ public class ListTypeFactory implements TypeFactory<List>
                                field,
                                factoryResolver)
         {
-            protected Collection parse(String propertyValue,
+            protected Collection parse(String propertyName,
+                                       String propertyValue,
                                        ObjectFactory objectFactory)
             {
                 List list = new ArrayList();
@@ -59,7 +59,8 @@ public class ListTypeFactory implements TypeFactory<List>
                 {
                     for (StringTokenizer stringTokenizer = new StringTokenizer(propertyValue); stringTokenizer.hasMoreTokens();)
                     {
-                        list.add(objectFactory.createObject(stringTokenizer.nextToken()));
+                        list.add(objectFactory.createObject(propertyName,
+                                                            stringTokenizer.nextToken()));
                     }
                 }
                 return list;

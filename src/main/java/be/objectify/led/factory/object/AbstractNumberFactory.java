@@ -15,9 +15,7 @@
  */
 package be.objectify.led.factory.object;
 
-import be.objectify.led.ObjectFactory;
 import be.objectify.led.util.StringUtils;
-
 import org.apache.log4j.Logger;
 
 /**
@@ -25,14 +23,15 @@ import org.apache.log4j.Logger;
  * 
  * @author Steve Chaloner
  */
-public abstract class AbstractNumberFactory<T> implements ObjectFactory<T>
+public abstract class AbstractNumberFactory<T> extends AbstractObjectFactory<T>
 {
     private static final Logger LOGGER = Logger.getLogger(AbstractNumberFactory.class);
 
     /**
      * {@inheritDoc}
      */
-    public T createObject(String propertyValue)
+    public T createObject(String propertyName,
+                          String propertyValue)
     {
         T t = null;
 

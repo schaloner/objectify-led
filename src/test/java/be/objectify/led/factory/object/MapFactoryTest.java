@@ -15,13 +15,12 @@
  */
 package be.objectify.led.factory.object;
 
+import be.objectify.led.DefaultFactoryResolver;
+import be.objectify.led.GenericTypes;
+import be.objectify.led.TypeFactoryRegistry;
+import be.objectify.led.factory.type.MapTypeFactory;
 import org.junit.Assert;
 import org.junit.Test;
-
-import be.objectify.led.DefaultFactoryResolver;
-import be.objectify.led.TypeFactoryRegistry;
-import be.objectify.led.GenericTypes;
-import be.objectify.led.factory.type.MapTypeFactory;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -48,7 +47,8 @@ public class MapFactoryTest extends AbstractObjectFactoryTest
     public void testDefaultFactory_nullPropertyValue() throws Exception
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
-                                                  getField()).createObject(null);
+                                                  getField()).createObject("propertyName",
+                                                                           null);
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof Map);
         Map map = (Map) o;
@@ -59,7 +59,8 @@ public class MapFactoryTest extends AbstractObjectFactoryTest
     public void testDefaultFactory_zeroLengthPropertyValue() throws Exception
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
-                                                  getField()).createObject("");
+                                                  getField()).createObject("propertyName",
+                                                                           "");
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof Map);
         Map map = (Map) o;
@@ -70,7 +71,8 @@ public class MapFactoryTest extends AbstractObjectFactoryTest
     public void testDefaultFactory_emptyPropertyValue() throws Exception
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
-                                                  getField()).createObject("    ");
+                                                  getField()).createObject("propertyName",
+                                                                           "    ");
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof Map);
         Map map = (Map) o;

@@ -15,7 +15,6 @@
  */
 package be.objectify.led.factory.object;
 
-import be.objectify.led.ObjectFactory;
 import be.objectify.led.util.StringUtils;
 
 /**
@@ -23,12 +22,13 @@ import be.objectify.led.util.StringUtils;
  *
  * @author Steve Chaloner
  */
-public class BooleanFactory implements ObjectFactory<Boolean>
+public class BooleanFactory extends AbstractObjectFactory<Boolean>
 {
     /**
      * {@inheritDoc}
      */
-    public Boolean createObject(String propertyValue)
+    public Boolean createObject(String propertyName,
+                                String propertyValue)
     {
         Boolean b = null;
         if (!StringUtils.isEmpty(propertyValue))

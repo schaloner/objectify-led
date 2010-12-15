@@ -15,10 +15,10 @@
  */
 package be.objectify.led;
 
-import org.apache.log4j.Logger;
-
+import be.objectify.led.factory.ValidationFunction;
 import be.objectify.led.util.ContractUtils;
 import be.objectify.led.util.StringUtils;
+import org.apache.log4j.Logger;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
@@ -76,8 +76,10 @@ public class PropertySetter
      * will not affect any instance members.
      *
      * @param target the class to check
+     * @param validationFunctions validation checks
      */
-    public void process(Class target)
+    public void process(Class target,
+                        ValidationFunction... validationFunctions)
     {
         Field[] fields = target.getDeclaredFields();
         for (Field field : fields)
@@ -86,7 +88,8 @@ public class PropertySetter
                 Modifier.isStatic(field.getModifiers()))
             {
                 setProperty(target,
-                            field);
+                            field,
+                            validationFunctions);
             }
         }
     }
@@ -96,8 +99,10 @@ public class PropertySetter
      * static members.
      *
      * @param target the object to check
+     * @param validationFunctions validation checks
      */
-    public void process(Object target)
+    public void process(Object target,
+                        ValidationFunction... validationFunctions)
     {
         Field[] fields = target.getClass().getDeclaredFields();
         for (Field field : fields)
@@ -105,7 +110,8 @@ public class PropertySetter
             if (field.isAnnotationPresent(Property.class))
             {
                 setProperty(target,
-                            field);
+                            field,
+                            validationFunctions);
             }
         }
     }
@@ -115,9 +121,11 @@ public class PropertySetter
      *
      * @param target the instance to work on
      * @param field  the field to use to set the property
+     * @param validationFunctions validation checks
      */
     private void setProperty(Object target,
-                             Field field)
+                             Field field,
+                             ValidationFunction... validationFunctions)
     {
         String propertyValue = getProperty(field);
         if (!StringUtils.isEmpty(propertyValue) &&
@@ -128,9 +136,14 @@ public class PropertySetter
                                                                          field);
             if (objectFactory != null)
             {
+                String fieldName = field.getAnnotation(Property.class).value();
+                objectFactory.validate(fieldName,
+                                       propertyValue,
+                                       validationFunctions);
                 setValue(target,
                          field,
-                         objectFactory.createObject(propertyValue));
+                         objectFactory.createObject(fieldName,
+                                                    propertyValue));
             }
             else if (LOGGER.isInfoEnabled())
             {

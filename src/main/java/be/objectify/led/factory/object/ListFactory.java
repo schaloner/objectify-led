@@ -15,19 +15,18 @@
  */
 package be.objectify.led.factory.object;
 
+import be.objectify.led.FactoryResolver;
+import be.objectify.led.ObjectFactory;
 import org.apache.log4j.Logger;
 
-import be.objectify.led.ObjectFactory;
-import be.objectify.led.FactoryResolver;
-
-import java.util.List;
-import java.util.Collection;
 import java.lang.reflect.Field;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * @author Steve Chaloner
  */
-public abstract class ListFactory<T> implements ObjectFactory<List>
+public abstract class ListFactory<T> extends AbstractObjectFactory<List>
 {
     private static final Logger LOGGER = Logger.getLogger(ListFactory.class);
 
@@ -46,7 +45,8 @@ public abstract class ListFactory<T> implements ObjectFactory<List>
         this.factoryResolver = factoryResolver;
     }
 
-    public List<T> createObject(String propertyValue)
+    public List<T> createObject(String propertyName,
+                                String propertyValue)
     {
         List<T> list = createList();
         ObjectFactory objectFactory = factoryResolver.resolveFactory(clazz,
@@ -61,7 +61,8 @@ public abstract class ListFactory<T> implements ObjectFactory<List>
         }
         else
         {
-            Collection<T> values = parse(propertyValue,
+            Collection<T> values = parse(propertyName,
+                                         propertyValue,
                                          objectFactory);
             if (values != null)
             {
@@ -83,7 +84,8 @@ public abstract class ListFactory<T> implements ObjectFactory<List>
         return List.class;
     }
 
-    protected abstract Collection<T> parse(String propertyValue,
+    protected abstract Collection<T> parse(String propertyName,
+                                           String propertyValue,
                                            ObjectFactory<T> objectFactory);
 
     protected abstract List<T> createList();

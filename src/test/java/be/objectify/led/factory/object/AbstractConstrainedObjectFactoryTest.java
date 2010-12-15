@@ -28,7 +28,10 @@ public abstract class AbstractConstrainedObjectFactoryTest extends AbstractObjec
     @Test
     public void testDefaultFactory_invalidPropertyValue()
     {
-        Object result = factoryResolver.resolveFactory(getTargetClass(), null).createObject(getInvalidPropertyValue());
+        Object result = factoryResolver.resolveFactory(getTargetClass(),
+                                                       null)
+                .createObject("propertyName",
+                              getInvalidPropertyValue());
         Assert.assertNull(result);
     }
 

@@ -15,10 +15,9 @@
  */
 package be.objectify.led.factory.object;
 
-import org.apache.log4j.Logger;
-
 import be.objectify.led.FactoryResolver;
 import be.objectify.led.ObjectFactory;
+import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -26,7 +25,7 @@ import java.util.Map;
 /**
  * @author Steve Chaloner
  */
-public abstract class MapFactory<K, V> implements ObjectFactory<Map>
+public abstract class MapFactory<K, V> extends AbstractObjectFactory<Map>
 {
     private static final Logger LOGGER = Logger.getLogger(MapFactory.class);
 
@@ -49,7 +48,8 @@ public abstract class MapFactory<K, V> implements ObjectFactory<Map>
         this.factoryResolver = factoryResolver;
     }
 
-    public Map<K, V> createObject(String propertyValue)
+    public Map<K, V> createObject(String propertyName,
+                                  String propertyValue)
     {
         Map<K, V> map = createMap();
         ObjectFactory keyObjectFactory = factoryResolver.resolveFactory(keyClass,
@@ -67,7 +67,8 @@ public abstract class MapFactory<K, V> implements ObjectFactory<Map>
         }
         else
         {
-            Map<K, V> values = parse(propertyValue,
+            Map<K, V> values = parse(propertyName,
+                                     propertyValue,
                                      keyObjectFactory,
                                      valueObjectFactory);
             if (values != null)
@@ -91,7 +92,8 @@ public abstract class MapFactory<K, V> implements ObjectFactory<Map>
         return Map.class;
     }
 
-    protected abstract Map<K, V> parse(String propertyValue,
+    protected abstract Map<K, V> parse(String propertyName,
+                                       String propertyValue,
                                        ObjectFactory<K> keyObjectFactory,
                                        ObjectFactory<V> valueObjectFactory);
 

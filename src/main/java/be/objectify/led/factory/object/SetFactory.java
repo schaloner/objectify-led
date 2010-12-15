@@ -15,19 +15,18 @@
  */
 package be.objectify.led.factory.object;
 
+import be.objectify.led.FactoryResolver;
+import be.objectify.led.ObjectFactory;
 import org.apache.log4j.Logger;
 
-import be.objectify.led.ObjectFactory;
-import be.objectify.led.FactoryResolver;
-
+import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.Set;
-import java.lang.reflect.Field;
 
 /**
  * @author Steve Chaloner
  */
-public abstract class SetFactory<T> implements ObjectFactory<Set>
+public abstract class SetFactory<T> extends AbstractObjectFactory<Set>
 {
     private static final Logger LOGGER = Logger.getLogger(SetFactory.class);
 
@@ -46,7 +45,8 @@ public abstract class SetFactory<T> implements ObjectFactory<Set>
         this.factoryResolver = factoryResolver;
     }
 
-    public Set<T> createObject(String propertyValue)
+    public Set<T> createObject(String propertyName,
+                               String propertyValue)
     {
         Set<T> set = createSet();
         ObjectFactory objectFactory = factoryResolver.resolveFactory(clazz,
@@ -61,7 +61,8 @@ public abstract class SetFactory<T> implements ObjectFactory<Set>
         }
         else
         {
-            Collection<T> values = parse(propertyValue,
+            Collection<T> values = parse(propertyName,
+                                         propertyValue,
                                          objectFactory);
             if (values != null)
             {
@@ -83,7 +84,8 @@ public abstract class SetFactory<T> implements ObjectFactory<Set>
         return Set.class;
     }
 
-    protected abstract Collection<T> parse(String propertyValue,
+    protected abstract Collection<T> parse(String propertyName,
+                                           String propertyValue,
                                            ObjectFactory<T> objectFactory);
 
     protected abstract Set<T> createSet();

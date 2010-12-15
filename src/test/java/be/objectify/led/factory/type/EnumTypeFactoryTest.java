@@ -15,10 +15,9 @@
  */
 package be.objectify.led.factory.type;
 
-import org.junit.Test;
-import org.junit.Assert;
-
 import be.objectify.led.factory.object.EnumFactory;
+import org.junit.Assert;
+import org.junit.Test;
 
 /**
  * @author Steve Chaloner
@@ -40,7 +39,7 @@ public class EnumTypeFactoryTest
         EnumFactory enumFactory = factory.createObjectFactory(new Class[]{ EnumTypeFactoryTestEnum.class },
                                                               null);
         Assert.assertNotNull(enumFactory);
-        Enum e = enumFactory.createObject("A");
+        Enum e = enumFactory.createObject("propertyName", "A");
         Assert.assertNotNull(e);
         Assert.assertEquals(EnumTypeFactoryTestEnum.A,
                             e);

@@ -15,7 +15,6 @@
  */
 package be.objectify.led.factory.object;
 
-import be.objectify.led.ObjectFactory;
 import org.apache.log4j.Logger;
 
 /**
@@ -23,7 +22,7 @@ import org.apache.log4j.Logger;
  *
  * @author Steve Chaloner
  */
-public class EnumFactory implements ObjectFactory<Enum>
+public class EnumFactory extends AbstractObjectFactory<Enum>
 {
     private static final Logger LOGGER = Logger.getLogger(EnumFactory.class);
 
@@ -37,7 +36,8 @@ public class EnumFactory implements ObjectFactory<Enum>
     /**
      * {@inheritDoc}
      */
-    public Enum createObject(String propertyValue)
+    public Enum createObject(String propertyName,
+                             String propertyValue)
     {
         Enum value = null;
 

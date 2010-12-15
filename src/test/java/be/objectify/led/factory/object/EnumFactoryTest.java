@@ -1,9 +1,7 @@
 package be.objectify.led.factory.object;
 
-import org.junit.Test;
 import org.junit.Assert;
-
-import be.objectify.led.factory.object.EnumFactory;
+import org.junit.Test;
 
 /**
  * Test cases for the default Enum object factory.
@@ -20,7 +18,8 @@ public class EnumFactoryTest
     public void testMatchingEntry()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
-        Enum e = enumFactory.createObject("A");
+        Enum e = enumFactory.createObject("propertyName",
+                                          "A");
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -29,7 +28,8 @@ public class EnumFactoryTest
     public void testLeadingSpaces()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
-        Enum e = enumFactory.createObject(" A");
+        Enum e = enumFactory.createObject("propertyName",
+                                          " A");
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -38,7 +38,8 @@ public class EnumFactoryTest
     public void testTrailingSpaces()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
-        Enum e = enumFactory.createObject("A ");
+        Enum e = enumFactory.createObject("propertyName",
+                                          "A ");
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -47,7 +48,8 @@ public class EnumFactoryTest
     public void testLeadingAndTrailingSpaces()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
-        Enum e = enumFactory.createObject(" A ");
+        Enum e = enumFactory.createObject("propertyName",
+                                          " A ");
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -56,7 +58,8 @@ public class EnumFactoryTest
     public void testLeadingTabs()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
-        Enum e = enumFactory.createObject("\tA");
+        Enum e = enumFactory.createObject("propertyName",
+                                          "\tA");
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -65,7 +68,8 @@ public class EnumFactoryTest
     public void testTrailingTabs()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
-        Enum e = enumFactory.createObject("A\t");
+        Enum e = enumFactory.createObject("propertyName",
+                                          "A\t");
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -74,7 +78,8 @@ public class EnumFactoryTest
     public void testLeadingAndTrailingTabs()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
-        Enum e = enumFactory.createObject("\tA\t");
+        Enum e = enumFactory.createObject("propertyName",
+                                          "\tA\t");
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -83,7 +88,8 @@ public class EnumFactoryTest
     public void testLeadingNewlines()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
-        Enum e = enumFactory.createObject("\nA");
+        Enum e = enumFactory.createObject("propertyName",
+                                          "\nA");
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -92,7 +98,8 @@ public class EnumFactoryTest
     public void testTrailingNewlines()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
-        Enum e = enumFactory.createObject("A\n");
+        Enum e = enumFactory.createObject("propertyName",
+                                          "A\n");
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -101,7 +108,8 @@ public class EnumFactoryTest
     public void testLeadingAndTrailingNewlines()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
-        Enum e = enumFactory.createObject("\nA\n");
+        Enum e = enumFactory.createObject("propertyName",
+                                          "\nA\n");
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -110,7 +118,8 @@ public class EnumFactoryTest
     public void testIncorrectCase()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumB.class);
-        Enum e = enumFactory.createObject("D");
+        Enum e = enumFactory.createObject("propertyName",
+                                          "D");
         Assert.assertEquals(TestEnumB.d,
                            e);
     }
@@ -119,7 +128,8 @@ public class EnumFactoryTest
     public void testMissingValue()
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumB.class);
-        Enum e = enumFactory.createObject("G");
+        Enum e = enumFactory.createObject("propertyName",
+                                          "G");
         Assert.assertNull(e);
     }
 }

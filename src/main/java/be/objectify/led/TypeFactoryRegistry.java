@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Steve Chaloner
+ * Copyright 2009-2010 Steve Chaloner
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,15 @@
  */
 package be.objectify.led;
 
+import be.objectify.led.util.ContractUtils;
 import org.apache.log4j.Logger;
 
-import be.objectify.led.util.ContractUtils;
-
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Iterator;
-import java.lang.annotation.Annotation;
 
 /**
  * Registry of {@link TypeFactory} for creating objects of the correct type based on the field.

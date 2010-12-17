@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Steve Chaloner
+ * Copyright 2009-2010 Steve Chaloner
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@ import be.objectify.led.factory.object.LongFactory;
 import be.objectify.led.factory.object.ShortFactory;
 import be.objectify.led.factory.object.StringFactory;
 import be.objectify.led.util.ContractUtils;
-
 import org.apache.log4j.Logger;
 
 import java.util.Arrays;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Steve Chaloner
+ * Copyright 2009-2010 Steve Chaloner
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,12 @@
  */
 package be.objectify.led;
 
+import be.objectify.led.factory.type.EnumTypeFactory;
+import be.objectify.led.factory.type.ListTypeFactory;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
-import be.objectify.led.factory.type.EnumTypeFactory;
-import be.objectify.led.factory.type.ListTypeFactory;
 
 import java.util.Arrays;
 import java.util.List;

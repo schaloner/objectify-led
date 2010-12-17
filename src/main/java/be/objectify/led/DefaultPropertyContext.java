@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 Steve Chaloner
+ * Copyright 2009-2010 Steve Chaloner
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@ package be.objectify.led;
 
 import be.objectify.led.util.ContractUtils;
 import be.objectify.led.util.StringUtils;
-
 import org.apache.log4j.Logger;
 
 import java.util.Properties;

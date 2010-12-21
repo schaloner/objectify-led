@@ -43,6 +43,9 @@ public class SetTypeFactory implements TypeFactory<Set>
         this.factoryResolver = factoryResolver;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public SetFactory createObjectFactory(Class[] classes,
                                           Field field)
     {
@@ -73,11 +76,17 @@ public class SetTypeFactory implements TypeFactory<Set>
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Class<Set> getBoundClass()
     {
         return Set.class;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Class[] determineClassType(Class fieldType,
                                       GenericTypes genericTypes)
     {

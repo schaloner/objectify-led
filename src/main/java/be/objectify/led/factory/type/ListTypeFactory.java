@@ -21,7 +21,6 @@ import be.objectify.led.ObjectFactory;
 import be.objectify.led.TypeFactory;
 import be.objectify.led.factory.object.ListFactory;
 import be.objectify.led.util.StringUtils;
-import org.apache.log4j.Logger;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -35,7 +34,6 @@ import java.util.StringTokenizer;
  */
 public class ListTypeFactory implements TypeFactory<List>
 {
-    private static final Logger LOGGER = Logger.getLogger(ListTypeFactory.class);
     private final FactoryResolver factoryResolver;
 
     public ListTypeFactory(FactoryResolver factoryResolver)
@@ -43,6 +41,9 @@ public class ListTypeFactory implements TypeFactory<List>
         this.factoryResolver = factoryResolver;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public ListFactory createObjectFactory(Class[] classes,
                                            Field field)
     {
@@ -73,11 +74,17 @@ public class ListTypeFactory implements TypeFactory<List>
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Class<List> getBoundClass()
     {
         return List.class;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Class[] determineClassType(Class fieldType,
                                       GenericTypes genericTypes)
     {

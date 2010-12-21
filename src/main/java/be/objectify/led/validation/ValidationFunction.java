@@ -13,9 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package be.objectify.led.factory;
-
-import be.objectify.led.ValidationException;
+package be.objectify.led.validation;
 
 /**
  * Functional objects are used to validate property values.

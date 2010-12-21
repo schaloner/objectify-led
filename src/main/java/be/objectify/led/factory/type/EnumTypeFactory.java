@@ -26,20 +26,29 @@ import java.lang.reflect.Field;
  */
 public class EnumTypeFactory implements TypeFactory<Enum>
 {
+    /**
+     * {@inheritDoc}
+     */
     public EnumFactory createObjectFactory(Class[] classes,
                                            Field field)
     {
         return new EnumFactory(classes[0]);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Class<Enum> getBoundClass()
     {
         return Enum.class;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Class[] determineClassType(Class fieldType,
                                       GenericTypes genericTypes)
     {
-        return new Class[]{ fieldType };
+        return new Class[]{fieldType};
     }
 }

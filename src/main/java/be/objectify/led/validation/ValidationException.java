@@ -13,21 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package be.objectify.led;
+package be.objectify.led.validation;
 
 /**
+ * Indicates validation has failed.
+ *
  * @author Steve Chaloner
  */
 public class ValidationException extends RuntimeException
 {
+    private String fieldName;
+
+    private String reason;
+
+    /**
+     * Initialises a new instance with the target field name and reason for the validation failure.
+     *
+     * @param fieldName the field name
+     * @param reason the reason
+     */
     public ValidationException(String fieldName,
                                String reason)
     {
         super(String.format("Validation failed on field [%s] because [%s]",
                             fieldName,
                             reason));
+        this.fieldName = fieldName;
+        this.reason = reason;
     }
 
+    /**
+     * Initialises a new instance with the target field name, reason for the validation failure and
+     * a root cause.
+     *
+     * @param fieldName the field name
+     * @param reason the reason
+     * @param cause an associated exception
+     */
     public ValidationException(String fieldName,
                                String reason,
                                Throwable cause)
@@ -36,5 +58,18 @@ public class ValidationException extends RuntimeException
                             fieldName,
                             reason),
               cause);
+        this.fieldName = fieldName;
+        this.reason = reason;
+    }
+
+
+    public String getFieldName()
+    {
+        return fieldName;
+    }
+
+    public String getReason()
+    {
+        return reason;
     }
 }

@@ -17,6 +17,7 @@ package be.objectify.led.util;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -54,13 +55,15 @@ public class ContractUtilsTest
     @Test(expected = IllegalArgumentException.class)
     public void testNonNullArray_nullValue()
     {
-        ContractUtils.nonNull((Object[])null, "name");
+        ContractUtils.nonNull((Object[]) null,
+                              "name");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testNonNullArray_nullName()
     {
-        ContractUtils.nonNull(new String[]{"object"}, null);
+        ContractUtils.nonNull(new String[]{"object"},
+                              null);
     }
 
     @Test
@@ -73,6 +76,12 @@ public class ContractUtilsTest
     public void testNonNullArray_validObject_nullName()
     {
         ContractUtils.nonNull(new String[]{"object"}, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNonNullArray_nullElement()
+    {
+        ContractUtils.nonNull(new Object[]{null}, null);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -97,5 +106,13 @@ public class ContractUtilsTest
     public void testNonNullCollection_validObject_nullName()
     {
         ContractUtils.nonNull(Arrays.asList("object"), null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testNonNullCollection_nullElement()
+    {
+        List<Object> list = new ArrayList<Object>();
+        list.add(null);
+        ContractUtils.nonNull(list, "name");
     }
 }

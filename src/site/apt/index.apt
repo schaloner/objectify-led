@@ -80,5 +80,5 @@ facade to more complex value stores.
 are populated if necessary.  If a class is processed, just the static members are populated (what with the lack of an
 instance and everything!).
 
- Final properties- despite the ability to do so via reflection – are not set.  This may or may not change depending
-on feedback.
+ Final properties, by default, are not bound.  To enable this feature, use PropertySetter#getConfiguration and call setAllowFinalSetting
+with a parameter of true.

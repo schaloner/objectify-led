@@ -15,10 +15,11 @@
  */
 package be.objectify.led;
 
-import be.objectify.led.factory.ValidationFunction;
 import be.objectify.led.util.ContractUtils;
 import be.objectify.led.util.StringUtils;
-import org.apache.log4j.Logger;
+import be.objectify.led.validation.ValidationFunction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.AccessibleObject;
 import java.lang.reflect.Field;
@@ -29,14 +30,16 @@ import java.lang.reflect.Modifier;
  */
 public class PropertySetter
 {
-    private static final Logger LOGGER = Logger.getLogger(PropertySetter.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PropertySetter.class);
 
     private final FactoryResolver factoryResolver;
 
     private final PropertyContext propertyContext;
 
+    private final PropertySetterConfiguration configuration;
+
     /**
-     * Initialses a new instance with a default {@link PropertyContext} and {@link FactoryResolver}.
+     * Initialises a new instance with a default {@link PropertyContext} and {@link FactoryResolver}.
      */
     public PropertySetter()
     {
@@ -56,7 +59,7 @@ public class PropertySetter
     }
 
     /**
-     * Initialses a new instance with the given property context and a object factory registry, and a default type factory registry.
+     * Initialises a new instance with the given property context and a object factory registry, and a default type factory registry.
      *
      * @param factoryResolver the object factory resolver.  Must not be null
      * @param propertyContext the property context.  Must not be null
@@ -69,6 +72,7 @@ public class PropertySetter
 
         this.factoryResolver = factoryResolver;
         this.propertyContext = propertyContext;
+        this.configuration = new PropertySetterConfiguration();
     }
 
     /**
@@ -128,8 +132,9 @@ public class PropertySetter
                              ValidationFunction... validationFunctions)
     {
         String propertyValue = getProperty(field);
+        boolean finalField = Modifier.isFinal(field.getModifiers());
         if (!StringUtils.isEmpty(propertyValue) &&
-            !Modifier.isFinal(field.getModifiers()))
+            (!finalField || configuration.isAllowFinalSetting()))
         {
             Class<?> type = field.getType();
             ObjectFactory objectFactory = factoryResolver.resolveFactory(type,
@@ -145,10 +150,10 @@ public class PropertySetter
                          objectFactory.createObject(fieldName,
                                                     propertyValue));
             }
-            else if (LOGGER.isInfoEnabled())
+            else
             {
-                LOGGER.info(String.format("No factory available for type [%s]",
-                                          type));
+                LOGGER.info("No factory available for type [{}]",
+                            type);
             }
         }
     }
@@ -191,14 +196,21 @@ public class PropertySetter
         String propertyName = annotation.value();
         String propertyValue = propertyContext.getValue(propertyName);
 
-        if (LOGGER.isDebugEnabled() && !StringUtils.isEmpty(propertyValue))
+        if (!StringUtils.isEmpty(propertyValue))
         {
-            LOGGER.debug(String.format("Found value [%s] for system property [%s] on [%s]",
-                                       propertyValue,
-                                       propertyName,
-                                       accessibleObject.toString()));
+            LOGGER.debug("Found value [{}] for system property [{}] on [{}]",
+                         new Object[] {
+                                 propertyValue,
+                                 propertyName,
+                                 accessibleObject.toString()
+                         });
         }
 
         return propertyValue;
+    }
+
+    public PropertySetterConfiguration getConfiguration()
+    {
+        return configuration;
     }
 }

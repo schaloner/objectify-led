@@ -16,7 +16,8 @@
 package be.objectify.led.factory.object;
 
 import be.objectify.led.util.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class for parsing numbers from Strings.
@@ -25,7 +26,7 @@ import org.apache.log4j.Logger;
  */
 public abstract class AbstractNumberFactory<T> extends AbstractObjectFactory<T>
 {
-    private static final Logger LOGGER = Logger.getLogger(AbstractNumberFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractNumberFactory.class);
 
     /**
      * {@inheritDoc}
@@ -43,8 +44,8 @@ public abstract class AbstractNumberFactory<T> extends AbstractObjectFactory<T>
             }
             catch (NumberFormatException e)
             {
-                LOGGER.error(String.format("Unable to parse %s to number",
-                                           propertyValue),
+                LOGGER.error("Unable to parse [{}] to number",
+                             propertyValue,
                              e);
             }
         }

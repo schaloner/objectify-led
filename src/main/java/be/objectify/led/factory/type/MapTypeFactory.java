@@ -21,7 +21,8 @@ import be.objectify.led.ObjectFactory;
 import be.objectify.led.TypeFactory;
 import be.objectify.led.factory.object.MapFactory;
 import be.objectify.led.util.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -34,7 +35,7 @@ import java.util.StringTokenizer;
  */
 public class MapTypeFactory implements TypeFactory<Map>
 {
-    private static final Logger LOGGER = Logger.getLogger(MapTypeFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapTypeFactory.class);
 
     private final FactoryResolver factoryResolver;
 
@@ -43,6 +44,9 @@ public class MapTypeFactory implements TypeFactory<Map>
         this.factoryResolver = factoryResolver;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public MapFactory createObjectFactory(Class[] classes,
                                           Field field)
     {
@@ -72,8 +76,8 @@ public class MapTypeFactory implements TypeFactory<Map>
                         }
                         else
                         {
-                            LOGGER.error(String.format("Could not separate [%s] into key:value",
-                                                       propertyValue));
+                            LOGGER.error("Could not separate [{}] into key:value",
+                                         propertyValue);
                         }
                     }
                 }
@@ -87,11 +91,17 @@ public class MapTypeFactory implements TypeFactory<Map>
         };
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Class<Map> getBoundClass()
     {
         return Map.class;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public Class[] determineClassType(Class fieldType,
                                       GenericTypes genericTypes)
     {

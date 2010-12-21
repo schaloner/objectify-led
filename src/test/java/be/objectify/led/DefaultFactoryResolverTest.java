@@ -16,6 +16,7 @@
 package be.objectify.led;
 
 import be.objectify.led.factory.type.ListTypeFactory;
+import be.objectify.led.validation.ValidationFunction;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,8 +31,14 @@ public class DefaultFactoryResolverTest
     @GenericTypes(Boolean.class)
     private List<Boolean> list;
 
+    /**
+     * Tests the default factory resolver with a default {@link TypeFactoryRegistry}
+     * and {@link ObjectFactoryRegistry}.
+     *
+     * @throws Exception if an exception occurs
+     */
     @Test
-    public void testDefaultValues() throws Exception
+    public void testDefaultValues_defaultConstructor() throws Exception
     {
         FactoryResolver factoryResolver = new DefaultFactoryResolver();
         ObjectFactory stringFactory = factoryResolver.resolveFactory(String.class,
@@ -39,12 +46,17 @@ public class DefaultFactoryResolverTest
         Assert.assertNotNull(stringFactory);
 
         ObjectFactory listFactory = factoryResolver.resolveFactory(List.class,
-                                                                     DefaultFactoryResolverTest.class.getDeclaredField("list"));
+                                                                   DefaultFactoryResolverTest.class.getDeclaredField("list"));
         Assert.assertNull(listFactory);
     }
 
+    /**
+     * Tests the default factory resolver with a custom {@link TypeFactoryRegistry}.
+     *
+     * @throws Exception if an exception occurs
+     */
     @Test
-    public void testResolverWithPopulatedTypeFactoryRegistry() throws Exception
+    public void testResolverWithPopulatedTypeFactoryRegistry_tfrConstructor() throws Exception
     {
         TypeFactoryRegistry registry = new TypeFactoryRegistry();
         FactoryResolver factoryResolver = new DefaultFactoryResolver(registry);
@@ -54,7 +66,94 @@ public class DefaultFactoryResolverTest
         Assert.assertNotNull(stringFactory);
 
         ObjectFactory listFactory = factoryResolver.resolveFactory(List.class,
-                                                                     DefaultFactoryResolverTest.class.getDeclaredField("list"));
+                                                                   DefaultFactoryResolverTest.class.getDeclaredField("list"));
+        Assert.assertNotNull(listFactory);
+    }
+
+    /**
+     * Tests the default factory resolver with a custom {@link ObjectFactoryRegistry}.
+     *
+     * @throws Exception if an exception occurs
+     */
+    @Test
+    public void testResolverWithPopulatedTypeFactoryRegistry_ofrConstructor() throws Exception
+    {
+        ObjectFactoryRegistry registry = new ObjectFactoryRegistry();
+        FactoryResolver factoryResolver = new DefaultFactoryResolver(registry);
+        registry.register(new ObjectFactory<String>()
+        {
+            public String createObject(String propertyName,
+                                       String propertyValue)
+            {
+                return "foo";
+            }
+
+            public Class<String> getBoundClass()
+            {
+                return String.class;
+            }
+
+            public void validate(String propertyName,
+                                 String propertyValue,
+                                 ValidationFunction... validationFunctions)
+            {
+            }
+        });
+        ObjectFactory stringFactory = factoryResolver.resolveFactory(String.class,
+                                                                     null);
+        Assert.assertNotNull(stringFactory);
+        Assert.assertEquals("foo",
+                            stringFactory.createObject("", ""));
+        Assert.assertEquals(String.class,
+                            stringFactory.getBoundClass());
+    }
+
+    /**
+     * Tests the default factory resolver with a custom {@link TypeFactoryRegistry}
+     * and {@link ObjectFactoryRegistry}.
+     *
+     * @throws Exception if an exception occurs
+     */
+    @Test
+    public void testResolverWithPopulatedTypeFactoryRegistry_ofrTfrConstructor() throws Exception
+    {
+        TypeFactoryRegistry typeFactoryRegistry = new TypeFactoryRegistry();
+        ObjectFactoryRegistry objectFactoryRegistry = new ObjectFactoryRegistry();
+        FactoryResolver factoryResolver = new DefaultFactoryResolver(objectFactoryRegistry,
+                                                                     typeFactoryRegistry);
+
+
+        objectFactoryRegistry.register(new ObjectFactory<String>()
+        {
+            public String createObject(String propertyName,
+                                       String propertyValue)
+            {
+                return "foo";
+            }
+
+            public Class<String> getBoundClass()
+            {
+                return String.class;
+            }
+
+            public void validate(String propertyName,
+                                 String propertyValue,
+                                 ValidationFunction... validationFunctions)
+            {
+            }
+        });
+        typeFactoryRegistry.register(new ListTypeFactory(factoryResolver));
+        ObjectFactory stringFactory = factoryResolver.resolveFactory(String.class,
+                                                                     null);
+        Assert.assertNotNull(stringFactory);
+        Assert.assertEquals("foo",
+                            stringFactory.createObject("",
+                                                       ""));
+        Assert.assertEquals(String.class,
+                            stringFactory.getBoundClass());
+
+        ObjectFactory listFactory = factoryResolver.resolveFactory(List.class,
+                                                                   DefaultFactoryResolverTest.class.getDeclaredField("list"));
         Assert.assertNotNull(listFactory);
     }
 }

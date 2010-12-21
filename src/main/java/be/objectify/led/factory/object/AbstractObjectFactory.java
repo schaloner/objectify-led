@@ -16,8 +16,8 @@
 package be.objectify.led.factory.object;
 
 import be.objectify.led.ObjectFactory;
-import be.objectify.led.ValidationException;
-import be.objectify.led.factory.ValidationFunction;
+import be.objectify.led.validation.ValidationException;
+import be.objectify.led.validation.ValidationFunction;
 
 /**
  * @author Steve Chaloner

@@ -17,6 +17,8 @@ package be.objectify.led;
 
 import be.objectify.led.factory.type.EnumTypeFactory;
 import be.objectify.led.factory.type.ListTypeFactory;
+import be.objectify.led.validation.ValidationException;
+import be.objectify.led.validation.ValidationFunction;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -73,7 +75,8 @@ public class PropertySetterTest
             private String value;
         }
         StringTestObject o = new StringTestObject();
-        System.setProperty("string.property", "test value");
+        System.setProperty("string.property",
+                           "test value");
         propertySetter.process(o);
         Assert.assertEquals("test value",
                             o.value);
@@ -102,7 +105,8 @@ public class PropertySetterTest
             private Boolean value;
         }
         BooleanTestObject o = new BooleanTestObject();
-        System.setProperty("boolean.property", "true");
+        System.setProperty("boolean.property",
+                           "true");
         propertySetter.process(o);
         Assert.assertEquals(Boolean.TRUE,
                             o.value);
@@ -131,7 +135,8 @@ public class PropertySetterTest
             private Byte value;
         }
         ByteTestObject o = new ByteTestObject();
-        System.setProperty("byte.property", "5");
+        System.setProperty("byte.property",
+                           "5");
         propertySetter.process(o);
         Assert.assertEquals(Byte.valueOf("5"),
                             o.value);
@@ -160,7 +165,8 @@ public class PropertySetterTest
             private Short value;
         }
         ShortTestObject o = new ShortTestObject();
-        System.setProperty("short.property", "2767");
+        System.setProperty("short.property",
+                           "2767");
         propertySetter.process(o);
         Assert.assertEquals(Short.valueOf("2767"),
                             o.value);
@@ -189,7 +195,8 @@ public class PropertySetterTest
             private Integer value;
         }
         IntegerTestObject o = new IntegerTestObject();
-        System.setProperty("integer.property", "40767");
+        System.setProperty("integer.property",
+                           "40767");
         propertySetter.process(o);
         Assert.assertEquals(Integer.valueOf(40767),
                             o.value);
@@ -218,7 +225,8 @@ public class PropertySetterTest
             private Long value;
         }
         LongTestObject o = new LongTestObject();
-        System.setProperty("long.property", "140767");
+        System.setProperty("long.property",
+                           "140767");
         propertySetter.process(o);
         Assert.assertEquals(Long.valueOf(140767),
                             o.value);
@@ -247,7 +255,8 @@ public class PropertySetterTest
             private Float value;
         }
         FloatTestObject o = new FloatTestObject();
-        System.setProperty("float.property", "40767.312f");
+        System.setProperty("float.property",
+                           "40767.312f");
         propertySetter.process(o);
         Assert.assertEquals(Float.valueOf(40767.312f),
                             o.value);
@@ -276,7 +285,8 @@ public class PropertySetterTest
             private Double value;
         }
         DoubleTestObject o = new DoubleTestObject();
-        System.setProperty("double.property", "140767.312");
+        System.setProperty("double.property",
+                           "140767.312");
         propertySetter.process(o);
         Assert.assertEquals(Double.valueOf(140767.312),
                             o.value);
@@ -305,7 +315,8 @@ public class PropertySetterTest
             private Character value;
         }
         CharacterTestObject o = new CharacterTestObject();
-        System.setProperty("character.property", "aaaaaa");
+        System.setProperty("character.property",
+                           "aaaaaa");
         propertySetter.process(o);
         Assert.assertEquals(Character.valueOf('a'),
                             o.value);
@@ -313,7 +324,7 @@ public class PropertySetterTest
     }
 
     @Test
-    public void testFinalProperty()
+    public void testFinalProperty_defaultValue()
     {
         class FinalTestObject
         {
@@ -321,9 +332,121 @@ public class PropertySetterTest
             private final String value = null;
         }
         FinalTestObject o = new FinalTestObject();
-        System.setProperty("string.property", "test value");
+        System.setProperty("string.property",
+                           "test value");
         propertySetter.process(o);
         Assert.assertNull(o.value);
+        System.clearProperty("string.property");
+    }
+
+    @Test
+    public void testFinalProperty_explicitlyDisabled()
+    {
+        class FinalTestObject
+        {
+            @Property("string.property")
+            private final String value = null;
+        }
+        FinalTestObject o = new FinalTestObject();
+        System.setProperty("string.property",
+                           "test value");
+        propertySetter.getConfiguration().setAllowFinalSetting(false);
+        propertySetter.process(o);
+        Assert.assertNull(o.value);
+        System.clearProperty("string.property");
+    }
+
+    @Test
+    public void testFinalProperty_explicitlyEnabled()
+    {
+        class FinalTestObject
+        {
+            @Property("string.property")
+            private final String value = null;
+        }
+        FinalTestObject o = new FinalTestObject();
+        System.setProperty("string.property",
+                           "test value");
+        propertySetter.getConfiguration().setAllowFinalSetting(true);
+        propertySetter.process(o);
+        Assert.assertEquals("test value",
+                            o.value);
+        System.clearProperty("string.property");
+    }
+
+    @Test(expected = ValidationException.class)
+    public void testValidationFailure()
+    {
+        class TestObject
+        {
+            @Property("string.property")
+            private String value = null;
+        }
+        TestObject o = new TestObject();
+        System.setProperty("string.property",
+                           "test value");
+        try
+        {
+            propertySetter.process(o,
+                                   new ValidationFunction()
+                                   {
+                                       public void validate(String propertyName,
+                                                            String propertyValue) throws ValidationException
+                                       {
+                                           throw new ValidationException("string.property",
+                                                                         "purely for test purposes");
+                                       }
+                                   });
+            Assert.fail();
+        }
+        catch (ValidationException e)
+        {
+            Assert.assertEquals("string.property",
+                                e.getFieldName());
+            Assert.assertEquals("purely for test purposes",
+                                e.getReason());
+            Assert.assertNull(e.getCause());
+            throw e;
+        }
+        System.clearProperty("string.property");
+    }
+
+
+    @Test(expected = ValidationException.class)
+    public void testValidationFailureWithCause()
+    {
+        class TestObject
+        {
+            @Property("string.property")
+            private String value = null;
+        }
+        TestObject o = new TestObject();
+        System.setProperty("string.property",
+                           "test value");
+        try
+        {
+            propertySetter.process(o,
+                                   new ValidationFunction()
+                                   {
+                                       public void validate(String propertyName,
+                                                            String propertyValue) throws ValidationException
+                                       {
+                                           throw new ValidationException("string.property",
+                                                                         "purely for test purposes",
+                                                                         new RuntimeException());
+                                       }
+                                   });
+            Assert.fail();
+        }
+        catch (ValidationException e)
+        {
+            Assert.assertEquals("string.property",
+                                e.getFieldName());
+            Assert.assertEquals("purely for test purposes",
+                                e.getReason());
+            Assert.assertNotNull(e.getCause());
+            throw e;
+        }
         System.clearProperty("string.property");
     }
 
@@ -342,7 +465,8 @@ public class PropertySetterTest
             private TestEnum value;
         }
         EnumTestObject o = new EnumTestObject();
-        System.setProperty("enum.property", "A");
+        System.setProperty("enum.property",
+                           "A");
         propertySetter.process(o);
         Assert.assertEquals(TestEnum.A,
                             o.value);
@@ -360,9 +484,12 @@ public class PropertySetterTest
             private List<String> value;
         }
         StringListTestObject o = new StringListTestObject();
-        System.setProperty("list.string.property", "A B C");
+        System.setProperty("list.string.property",
+                           "A B C");
         propertySetter.process(o);
-        Assert.assertEquals(Arrays.asList("A", "B", "C"),
+        Assert.assertEquals(Arrays.asList("A",
+                                          "B",
+                                          "C"),
                             o.value);
 
         System.clearProperty("list.string.property");
@@ -378,9 +505,13 @@ public class PropertySetterTest
             private List<Integer> value;
         }
         StringListTestObject o = new StringListTestObject();
-        System.setProperty("list.integer.property", "-4532 1 45 34587");
+        System.setProperty("list.integer.property",
+                           "-4532 1 45 34587");
         propertySetter.process(o);
-        Assert.assertEquals(Arrays.asList(-4532, 1, 45, 34587),
+        Assert.assertEquals(Arrays.asList(-4532,
+                                          1,
+                                          45,
+                                          34587),
                             o.value);
 
         System.clearProperty("list.integer.property");
@@ -396,9 +527,13 @@ public class PropertySetterTest
             private List<Integer> value;
         }
         StringListTestObject o = new StringListTestObject();
-        System.setProperty("list.int.property", "-4532 1 45 34587");
+        System.setProperty("list.int.property",
+                           "-4532 1 45 34587");
         propertySetter.process(o);
-        Assert.assertEquals(Arrays.asList(-4532, 1, 45, 34587),
+        Assert.assertEquals(Arrays.asList(-4532,
+                                          1,
+                                          45,
+                                          34587),
                             o.value);
 
         System.clearProperty("list.int.property");
@@ -414,9 +549,11 @@ public class PropertySetterTest
             private List<TestEnum> value;
         }
         StringListTestObject o = new StringListTestObject();
-        System.setProperty("list.enum.property", "A B");
+        System.setProperty("list.enum.property",
+                           "A B");
         propertySetter.process(o);
-        Assert.assertEquals(Arrays.asList(TestEnum.A, TestEnum.B),
+        Assert.assertEquals(Arrays.asList(TestEnum.A,
+                                          TestEnum.B),
                             o.value);
 
         System.clearProperty("list.enum.property");
@@ -428,34 +565,43 @@ public class PropertySetterTest
         class MultipleTestObject
         {
             @Property("boolean.property")
-            private Boolean booleanValue;
+            private Boolean   booleanValue;
             @Property("byte.property")
-            private Byte byteValue;
+            private Byte      byteValue;
             @Property("character.property")
             private Character characterValue;
             @Property("double.property")
-            private Double doubleValue;
+            private Double    doubleValue;
             @Property("float.property")
-            private Float floatValue;
+            private Float     floatValue;
             @Property("integer.property")
-            private Integer integerValue;
+            private Integer   integerValue;
             @Property("long.property")
-            private Long longValue;
+            private Long      longValue;
             @Property("short.property")
-            private Short shortValue;
+            private Short     shortValue;
             @Property("string.property")
-            private String stringValue;
+            private String    stringValue;
         }
         MultipleTestObject o = new MultipleTestObject();
-        System.setProperty("boolean.property", "true");
-        System.setProperty("byte.property", "5");
-        System.setProperty("character.property", "aaaaaa");
-        System.setProperty("double.property", "140767.312");
-        System.setProperty("float.property", "40767.312f");
-        System.setProperty("integer.property", "40767");
-        System.setProperty("long.property", "140767");
-        System.setProperty("short.property", "2767");
-        System.setProperty("string.property", "test value");
+        System.setProperty("boolean.property",
+                           "true");
+        System.setProperty("byte.property",
+                           "5");
+        System.setProperty("character.property",
+                           "aaaaaa");
+        System.setProperty("double.property",
+                           "140767.312");
+        System.setProperty("float.property",
+                           "40767.312f");
+        System.setProperty("integer.property",
+                           "40767");
+        System.setProperty("long.property",
+                           "140767");
+        System.setProperty("short.property",
+                           "2767");
+        System.setProperty("string.property",
+                           "test value");
 
         propertySetter.process(o);
         Assert.assertEquals(Boolean.TRUE,

@@ -17,7 +17,8 @@ package be.objectify.led.factory.object;
 
 import be.objectify.led.FactoryResolver;
 import be.objectify.led.ObjectFactory;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
@@ -28,7 +29,7 @@ import java.util.List;
  */
 public abstract class ListFactory<T> extends AbstractObjectFactory<List>
 {
-    private static final Logger LOGGER = Logger.getLogger(ListFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ListFactory.class);
 
     private final Class clazz;
 
@@ -53,11 +54,8 @@ public abstract class ListFactory<T> extends AbstractObjectFactory<List>
                                                                      field);
         if (objectFactory == null)
         {
-            if (LOGGER.isInfoEnabled())
-            {
-                LOGGER.info(String.format("No factory available for type [%s]",
-                                          clazz.getCanonicalName()));
-            }
+            LOGGER.info("No factory available for type [{}]",
+                        clazz.getCanonicalName());
         }
         else
         {
@@ -68,11 +66,11 @@ public abstract class ListFactory<T> extends AbstractObjectFactory<List>
             {
                 list.addAll(values);
             }
-            else if (LOGGER.isInfoEnabled())
+            else
             {
-                LOGGER.info(String.format("Property value [%s] did not parse into collection of type [%s]",
-                                          propertyValue,
-                                          clazz.getCanonicalName()));
+                LOGGER.info("Property value [{}] did not parse into collection of type [{}]",
+                            propertyValue,
+                            clazz.getCanonicalName());
             }
         }
 

@@ -17,7 +17,8 @@ package be.objectify.led.factory.object;
 
 import be.objectify.led.FactoryResolver;
 import be.objectify.led.ObjectFactory;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -27,7 +28,7 @@ import java.util.Map;
  */
 public abstract class MapFactory<K, V> extends AbstractObjectFactory<Map>
 {
-    private static final Logger LOGGER = Logger.getLogger(MapFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapFactory.class);
 
     private final Class keyClass;
 
@@ -58,12 +59,9 @@ public abstract class MapFactory<K, V> extends AbstractObjectFactory<Map>
                                                                           field);
         if (keyObjectFactory == null || valueObjectFactory == null)
         {
-            if (LOGGER.isInfoEnabled())
-            {
-                LOGGER.info(String.format("No factory available for map: key factory [%s]   value factory [%s]",
-                                          keyClass.getCanonicalName(),
-                                          valueClass.getCanonicalName()));
-            }
+            LOGGER.info("No factory available for map: key factory [{}]   value factory [{}]",
+                        keyClass.getCanonicalName(),
+                        valueClass.getCanonicalName());
         }
         else
         {
@@ -75,12 +73,13 @@ public abstract class MapFactory<K, V> extends AbstractObjectFactory<Map>
             {
                 map.putAll(values);
             }
-            else if (LOGGER.isInfoEnabled())
+            else
             {
-                LOGGER.info(String.format("Property value [%s] did not parse into map of type [%s][%s]",
-                                          propertyValue,
-                                          keyClass.getCanonicalName(),
-                                          valueClass.getCanonicalName()));
+                LOGGER.info("Property value [{}] did not parse into map of type [{}][{}]",
+                            new Object[]{
+                                    propertyValue,
+                                    keyClass.getCanonicalName(),
+                                    valueClass.getCanonicalName()});
             }
         }
 

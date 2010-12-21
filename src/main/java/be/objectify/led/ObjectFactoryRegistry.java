@@ -25,7 +25,8 @@ import be.objectify.led.factory.object.LongFactory;
 import be.objectify.led.factory.object.ShortFactory;
 import be.objectify.led.factory.object.StringFactory;
 import be.objectify.led.util.ContractUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ import java.util.Map;
  */
 public class ObjectFactoryRegistry
 {
-    private static final Logger LOGGER = Logger.getLogger(ObjectFactoryRegistry.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ObjectFactoryRegistry.class);
 
     private final Map<Class, ObjectFactory> objectFactories = new HashMap<Class, ObjectFactory>();
 
@@ -144,18 +145,16 @@ public class ObjectFactoryRegistry
 
         ObjectFactory factory = objectFactories.get(clazz);
 
-        if (LOGGER.isDebugEnabled())
+        if (factory != null)
         {
-            if (factory != null)
-            {
-                LOGGER.debug(String.format("Found object factory [%s] for class [%s]",
-                                           factory,
-                                           clazz.getCanonicalName()));
-            }
-            else
-            {
-                LOGGER.debug("Could not find object factory for " + clazz.getCanonicalName());
-            }
+            LOGGER.debug("Found object factory [{}] for class [{}]",
+                         factory,
+                         clazz.getCanonicalName());
+        }
+        else
+        {
+            LOGGER.debug("Could not find object factory for {}",
+                         clazz.getCanonicalName());
         }
 
         return factory;

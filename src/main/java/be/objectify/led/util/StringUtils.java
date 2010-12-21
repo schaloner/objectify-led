@@ -24,7 +24,6 @@ public class StringUtils
 {
     private StringUtils()
     {
-
     }
 
     /**

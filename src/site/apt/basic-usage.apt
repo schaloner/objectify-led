@@ -37,7 +37,7 @@ public interface PropertyContext
 +--
 
   objectify-led handles conversion of values to the correct type automatically, and all primitive and primitive wrapper (Integer, Float, etc)
-types, and Strings,  are supported out of the box.  See "Advanced usage" for details on supporting custom types.
+types, and Strings, are supported out of the box.  See "Advanced usage" for details on supporting custom types.
 
   Finally, to convert and bind values to model properties, PropertySetter is the entry point:
   

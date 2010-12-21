@@ -17,7 +17,8 @@ package be.objectify.led;
 
 import be.objectify.led.util.ContractUtils;
 import be.objectify.led.util.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
@@ -28,7 +29,7 @@ import java.util.Properties;
  */
 public class DefaultPropertyContext implements PropertyContext
 {
-    private static final Logger LOGGER = Logger.getLogger(DefaultPropertyContext.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultPropertyContext.class);
 
     private final Properties properties = new Properties();
 
@@ -58,11 +59,11 @@ public class DefaultPropertyContext implements PropertyContext
             value = property;
         }
 
-        if (value != null && LOGGER.isDebugEnabled())
+        if (value != null)
         {
-            LOGGER.debug(String.format("Found value [%s] for property [%s]",
-                                       value,
-                                       propertyName));
+            LOGGER.debug("Found value [{}] for property [{}]",
+                         value,
+                         propertyName);
         }
 
         return value;

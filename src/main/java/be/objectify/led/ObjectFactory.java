@@ -15,7 +15,7 @@
  */
 package be.objectify.led;
 
-import be.objectify.led.factory.ValidationFunction;
+import be.objectify.led.validation.ValidationFunction;
 
 /**
  * Object factories are used to convert string property values into objects of an specific type.
@@ -47,7 +47,7 @@ public interface ObjectFactory<T>
      * @param propertyName the name of the property
      * @param propertyValue the value from the @{link PropertyContext}
      * @param validationFunctions functions to validate the property value
-     * @throws ValidationException if the property value isn't valid
+     * @throws be.objectify.led.validation.ValidationException if the property value isn't valid
      */
     public void validate(String propertyName,
                          String propertyValue,

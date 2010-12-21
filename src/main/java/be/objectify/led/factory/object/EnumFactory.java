@@ -15,7 +15,8 @@
  */
 package be.objectify.led.factory.object;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Object factory for Enums.
@@ -24,7 +25,7 @@ import org.apache.log4j.Logger;
  */
 public class EnumFactory extends AbstractObjectFactory<Enum>
 {
-    private static final Logger LOGGER = Logger.getLogger(EnumFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(EnumFactory.class);
 
     private final Class<? extends Enum> clazz;
 

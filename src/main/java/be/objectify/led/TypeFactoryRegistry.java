@@ -16,7 +16,8 @@
 package be.objectify.led;
 
 import be.objectify.led.util.ContractUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.Iterator;
@@ -32,7 +33,7 @@ import java.util.Set;
  */
 public class TypeFactoryRegistry
 {
-    private static final Logger LOGGER = Logger.getLogger(TypeFactoryRegistry.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(TypeFactoryRegistry.class);
 
     private final Map<Class, TypeFactory> typeFactories = new LinkedHashMap<Class, TypeFactory>();
 
@@ -84,29 +85,25 @@ public class TypeFactoryRegistry
                 if (c.isAssignableFrom(clazz))
                 {
                     factory = typeFactories.get(c);
-                    if (LOGGER.isDebugEnabled())
-                    {
-                        LOGGER.debug(String.format("Found type factory [%s] for class [%s] using supertype [%s]",
-                                                   factory,
-                                                   clazz.getCanonicalName(),
-                                                   c.getCanonicalName()));
-                    }
+                    LOGGER.debug("Found type factory [{}] for class [{}] using supertype [{}]",
+                                 new Object[]{
+                                         factory,
+                                         clazz.getCanonicalName(),
+                                         c.getCanonicalName()
+                                 });
                 }
             }
-            if (factory == null && LOGGER.isDebugEnabled())
+            if (factory == null)
             {
-                LOGGER.debug(String.format("Could not find type factory for class [%s]",
-                                           clazz.getCanonicalName()));
+                LOGGER.debug("Could not find type factory for class [{}]",
+                             clazz.getCanonicalName());
             }
         }
         else
         {
-            if (LOGGER.isDebugEnabled())
-            {
-                LOGGER.debug(String.format("Found type factory [%s] for class [%s]",
-                                           factory,
-                                           clazz.getCanonicalName()));
-            }
+            LOGGER.debug("Found type factory [{}] for class [{}]",
+                         factory,
+                         clazz.getCanonicalName());
         }
 
         return factory;

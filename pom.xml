@@ -2,12 +2,17 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>5</version>
+    </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>be.objectify</groupId>
     <artifactId>objectify-led</artifactId>
     <packaging>jar</packaging>
-    <version>1.2</version>
+    <version>1.2-SNAPSHOT</version>
     <name>objectify-led</name>
     <url>http://www.objectify.be/objectify-led</url>
     <organization>
@@ -51,6 +56,35 @@
             </plugin>
 
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.1.2</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.7</version>
+                <configuration>
+                    <show>private</show>
+                </configuration>
+            </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+            </plugin>
+
+            <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptorRefs>
@@ -62,6 +96,36 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>release-sign-artifacts</id>
+            <activation>
+                <property>
+                    <name>performRelease</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+    
     <dependencies>
         <!-- Start: Runtime dependencies -->
         <dependency>
@@ -127,9 +191,9 @@
     </reporting>
 
     <scm>
-        <url>scm:svn:http://objectify-led.googlecode.com/svn/trunk/</url>
         <connection>scm:svn:http://objectify-led.googlecode.com/svn/trunk/</connection>
         <developerConnection>scm:svn:http://objectify-led.googlecode.com/svn/trunk/</developerConnection>
+        <url>http://objectify-led.googlecode.com/svn/trunk/</url>
     </scm>
 
     <issueManagement>

@@ -201,9 +201,9 @@
     </reporting>
 
     <scm>
-        <connection>scm:svn:http://objectify-led.googlecode.com/svn/tags/objectify-led-1.2</connection>
-        <developerConnection>scm:svn:http://objectify-led.googlecode.com/svn/tags/objectify-led-1.2</developerConnection>
-        <url>http://objectify-led.googlecode.com/svn/tags/objectify-led-1.2</url>
+        <connection>scm:svn:https://objectify-led.googlecode.com/svn/tags/objectify-led-1.2</connection>
+        <developerConnection>scm:svn:https://objectify-led.googlecode.com/svn/tags/objectify-led-1.2</developerConnection>
+        <url>https://objectify-led.googlecode.com/svn/tags/objectify-led-1.2</url>
     </scm>
 
     <issueManagement>

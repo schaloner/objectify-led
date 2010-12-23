@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -12,7 +10,7 @@
     <groupId>be.objectify</groupId>
     <artifactId>objectify-led</artifactId>
     <packaging>jar</packaging>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
     <name>objectify-led</name>
     <url>http://www.objectify.be/objectify-led</url>
     <organization>
@@ -203,9 +201,9 @@
     </reporting>
 
     <scm>
-        <connection>scm:svn:http://objectify-led.googlecode.com/svn/trunk/</connection>
-        <developerConnection>scm:svn:http://objectify-led.googlecode.com/svn/trunk/</developerConnection>
-        <url>http://objectify-led.googlecode.com/svn/trunk/</url>
+        <connection>scm:svn:http://objectify-led.googlecode.com/svn/tags/objectify-led-1.2</connection>
+        <developerConnection>scm:svn:http://objectify-led.googlecode.com/svn/tags/objectify-led-1.2</developerConnection>
+        <url>http://objectify-led.googlecode.com/svn/tags/objectify-led-1.2</url>
     </scm>
 
     <issueManagement>

@@ -220,7 +220,7 @@
             <email>opensource@objectify.be</email>
             <organization>Objectify</organization>
             <organizationUrl>http://www.objectify.be</organizationUrl>
-
+            <timezone>1</timezone>
             <roles>
                 <role>Developer</role>
             </roles>

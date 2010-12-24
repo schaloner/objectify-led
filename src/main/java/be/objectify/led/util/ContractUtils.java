@@ -22,7 +22,7 @@ import java.util.Collection;
  *
  * @author Steve Chaloner
  */
-public class ContractUtils
+public final class ContractUtils
 {
     private ContractUtils()
     {

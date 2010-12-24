@@ -20,7 +20,7 @@ package be.objectify.led.util;
  *
  * @author Steve Chaloner
  */
-public class StringUtils
+public final class StringUtils
 {
     private StringUtils()
     {

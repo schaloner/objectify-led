@@ -10,8 +10,13 @@ import java.util.List;
  *
  * @author Steve Chaloner (steve@objectify.be).
  */
-public class PropertyDigger
+public final class PropertyDigger
 {
+    private PropertyDigger()
+    {
+        // no-op
+    }
+
     public enum SortOrder { NATURAL, BY_NAME }
 
     /**

@@ -49,7 +49,7 @@ public interface ObjectFactory<T>
      * @param validationFunctions functions to validate the property value
      * @throws be.objectify.led.validation.ValidationException if the property value isn't valid
      */
-    public void validate(String propertyName,
-                         String propertyValue,
-                         ValidationFunction... validationFunctions);
+    void validate(String propertyName,
+                  String propertyValue,
+                  ValidationFunction... validationFunctions);
 }

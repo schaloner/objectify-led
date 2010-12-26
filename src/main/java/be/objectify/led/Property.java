@@ -37,4 +37,6 @@ public @interface Property
      * @return the name of the property
      */
     String value();
+
+    String description() default "";
 }

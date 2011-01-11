@@ -15,6 +15,7 @@
  */
 package be.objectify.led.factory.object;
 
+import be.objectify.led.PropertyContext;
 import be.objectify.led.util.StringUtils;
 
 /**
@@ -28,7 +29,8 @@ public class CharacterFactory extends AbstractObjectFactory<Character>
      * {@inheritDoc}
      */
     public Character createObject(String propertyName,
-                                  String propertyValue)
+                                  String propertyValue,
+                                  PropertyContext propertyContext)
     {
         Character c = null;
 

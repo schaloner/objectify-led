@@ -18,6 +18,7 @@ package be.objectify.led.factory.type;
 import be.objectify.led.FactoryResolver;
 import be.objectify.led.GenericTypes;
 import be.objectify.led.ObjectFactory;
+import be.objectify.led.PropertyContext;
 import be.objectify.led.TypeFactory;
 import be.objectify.led.factory.object.MapFactory;
 import be.objectify.led.util.StringUtils;
@@ -57,6 +58,7 @@ public class MapTypeFactory implements TypeFactory<Map>
         {
             protected Map parse(String propertyName,
                                 String propertyValue,
+                                PropertyContext propertyContext,
                                 ObjectFactory keyObjectFactory,
                                 ObjectFactory valueObjectFactory)
             {
@@ -70,9 +72,11 @@ public class MapTypeFactory implements TypeFactory<Map>
                         if (strings.length == 2)
                         {
                             map.put(keyObjectFactory.createObject(propertyName,
-                                                                  strings[0]),
+                                                                  strings[0],
+                                                                  propertyContext),
                                     valueObjectFactory.createObject(propertyName,
-                                                                    strings[1]));
+                                                                    strings[1],
+                                                                    propertyContext));
                         }
                         else
                         {

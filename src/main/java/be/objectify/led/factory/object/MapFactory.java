@@ -17,6 +17,7 @@ package be.objectify.led.factory.object;
 
 import be.objectify.led.FactoryResolver;
 import be.objectify.led.ObjectFactory;
+import be.objectify.led.PropertyContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,7 +51,8 @@ public abstract class MapFactory<K, V> extends AbstractObjectFactory<Map>
     }
 
     public Map<K, V> createObject(String propertyName,
-                                  String propertyValue)
+                                  String propertyValue,
+                                  PropertyContext propertyContext)
     {
         Map<K, V> map = createMap();
         ObjectFactory keyObjectFactory = factoryResolver.resolveFactory(keyClass,
@@ -67,6 +69,7 @@ public abstract class MapFactory<K, V> extends AbstractObjectFactory<Map>
         {
             Map<K, V> values = parse(propertyName,
                                      propertyValue,
+                                     propertyContext,
                                      keyObjectFactory,
                                      valueObjectFactory);
             if (values != null)
@@ -93,6 +96,7 @@ public abstract class MapFactory<K, V> extends AbstractObjectFactory<Map>
 
     protected abstract Map<K, V> parse(String propertyName,
                                        String propertyValue,
+                                       PropertyContext propertyContext,
                                        ObjectFactory<K> keyObjectFactory,
                                        ObjectFactory<V> valueObjectFactory);
 

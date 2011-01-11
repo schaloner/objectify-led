@@ -1,5 +1,6 @@
 package be.objectify.led.factory.object;
 
+import be.objectify.led.PropertyContext;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -10,6 +11,14 @@ import org.junit.Test;
  */
 public class EnumFactoryTest
 {
+    private static final PropertyContext NULL_PROPERTY_CONTEXT = new PropertyContext()
+    {
+        public String getValue(String propertyName)
+        {
+            return null;
+        }
+    };
+
     public enum TestEnumA {A, B, C}
 
     public enum TestEnumB {c, d, e}
@@ -19,7 +28,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          "A");
+                                          "A",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -29,7 +39,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          " A");
+                                          " A",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -39,7 +50,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          "A ");
+                                          "A ",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -49,7 +61,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          " A ");
+                                          " A ",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -59,7 +72,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          "\tA");
+                                          "\tA",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -69,7 +83,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          "A\t");
+                                          "A\t",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -79,7 +94,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          "\tA\t");
+                                          "\tA\t",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -89,7 +105,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          "\nA");
+                                          "\nA",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -99,7 +116,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          "A\n");
+                                          "A\n",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -109,7 +127,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumA.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          "\nA\n");
+                                          "\nA\n",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(TestEnumA.A,
                            e);
     }
@@ -119,7 +138,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumB.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          "D");
+                                          "D",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(TestEnumB.d,
                            e);
     }
@@ -129,7 +149,8 @@ public class EnumFactoryTest
     {
         EnumFactory enumFactory = new EnumFactory(TestEnumB.class);
         Enum e = enumFactory.createObject("propertyName",
-                                          "G");
+                                          "G",
+                                          NULL_PROPERTY_CONTEXT);
         Assert.assertNull(e);
     }
 }

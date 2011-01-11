@@ -148,7 +148,8 @@ public class PropertySetter
                 setValue(target,
                          field,
                          objectFactory.createObject(fieldName,
-                                                    propertyValue));
+                                                    propertyValue,
+                                                    propertyContext));
             }
             else
             {

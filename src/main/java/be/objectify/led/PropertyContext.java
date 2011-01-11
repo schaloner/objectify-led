@@ -24,7 +24,7 @@ package be.objectify.led;
 public interface PropertyContext
 {
     /**
-     * Gets the named propety from the context.
+     * Gets the named property from the context.
      *
      * @param propertyName the name of the property
      * @return the value mapped to the property name, or null if no value exists

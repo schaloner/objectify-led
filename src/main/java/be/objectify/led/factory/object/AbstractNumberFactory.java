@@ -15,6 +15,7 @@
  */
 package be.objectify.led.factory.object;
 
+import be.objectify.led.PropertyContext;
 import be.objectify.led.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,8 @@ public abstract class AbstractNumberFactory<T> extends AbstractObjectFactory<T>
      * {@inheritDoc}
      */
     public T createObject(String propertyName,
-                          String propertyValue)
+                          String propertyValue,
+                          PropertyContext propertyContext)
     {
         T t = null;
 

@@ -48,7 +48,8 @@ public class ListFactoryTest extends AbstractObjectFactoryTest
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
                                                   getField()).createObject("propertyName",
-                                                                           null);
+                                                                           null,
+                                                                           NULL_PROPERTY_CONTEXT);
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof List);
         List list = (List)o;
@@ -60,7 +61,8 @@ public class ListFactoryTest extends AbstractObjectFactoryTest
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
                                                   getField()).createObject("propertyName",
-                                                                           "");
+                                                                           "",
+                                                                           NULL_PROPERTY_CONTEXT);
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof List);
         List list = (List)o;
@@ -72,7 +74,8 @@ public class ListFactoryTest extends AbstractObjectFactoryTest
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
                                                   getField()).createObject("propertyName",
-                                                                           "    ");
+                                                                           "    ",
+                                                                           NULL_PROPERTY_CONTEXT);
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof List);
         List list = (List)o;

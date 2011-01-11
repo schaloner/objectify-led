@@ -15,6 +15,7 @@
  */
 package be.objectify.led.factory.object;
 
+import be.objectify.led.PropertyContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,7 +39,8 @@ public class EnumFactory extends AbstractObjectFactory<Enum>
      * {@inheritDoc}
      */
     public Enum createObject(String propertyName,
-                             String propertyValue)
+                             String propertyValue,
+                             PropertyContext propertyContext)
     {
         Enum value = null;
 

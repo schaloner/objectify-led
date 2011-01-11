@@ -17,6 +17,7 @@ package be.objectify.led.factory.object;
 
 import be.objectify.led.DefaultFactoryResolver;
 import be.objectify.led.FactoryResolver;
+import be.objectify.led.PropertyContext;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -29,6 +30,14 @@ import java.lang.reflect.Field;
  */
 public abstract class AbstractObjectFactoryTest
 {
+    protected static final PropertyContext NULL_PROPERTY_CONTEXT = new PropertyContext()
+    {
+        public String getValue(String propertyName)
+        {
+            return null;
+        }
+    };
+
     protected FactoryResolver factoryResolver;
 
     @Before
@@ -48,7 +57,8 @@ public abstract class AbstractObjectFactoryTest
     {
         Assert.assertNull(factoryResolver.resolveFactory(getTargetClass(),
                                                          getField()).createObject("propertyName",
-                                                                                  null));
+                                                                                  null,
+                                                                                  NULL_PROPERTY_CONTEXT));
     }
 
     @Test
@@ -56,7 +66,8 @@ public abstract class AbstractObjectFactoryTest
     {
         Assert.assertNull(factoryResolver.resolveFactory(getTargetClass(),
                                                          getField()).createObject("propertyName",
-                                                                                  ""));
+                                                                                  "",
+                                                                                  NULL_PROPERTY_CONTEXT));
     }
 
     @Test
@@ -64,7 +75,8 @@ public abstract class AbstractObjectFactoryTest
     {
         Assert.assertNull(factoryResolver.resolveFactory(getTargetClass(),
                                                          getField()).createObject("propertyName",
-                                                                                  "     "));
+                                                                                  "     ",
+                                                                                  NULL_PROPERTY_CONTEXT));
     }
 
     @Test
@@ -72,7 +84,8 @@ public abstract class AbstractObjectFactoryTest
     {
         Object result = factoryResolver.resolveFactory(getTargetClass(),
                                                        getField()).createObject("propertyName",
-                                                                                  getPropertyValue());
+                                                                                  getPropertyValue(),
+                                                                                  NULL_PROPERTY_CONTEXT);
         Assert.assertEquals(getResult(),
                             result);
     }

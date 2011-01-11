@@ -17,6 +17,7 @@ package be.objectify.led.factory.object;
 
 import be.objectify.led.FactoryResolver;
 import be.objectify.led.ObjectFactory;
+import be.objectify.led.PropertyContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,7 +48,8 @@ public abstract class SetFactory<T> extends AbstractObjectFactory<Set>
     }
 
     public Set<T> createObject(String propertyName,
-                               String propertyValue)
+                               String propertyValue,
+                               PropertyContext propertyContext)
     {
         Set<T> set = createSet();
         ObjectFactory objectFactory = factoryResolver.resolveFactory(clazz,
@@ -61,6 +63,7 @@ public abstract class SetFactory<T> extends AbstractObjectFactory<Set>
         {
             Collection<T> values = parse(propertyName,
                                          propertyValue,
+                                         propertyContext,
                                          objectFactory);
             if (values != null)
             {
@@ -84,6 +87,7 @@ public abstract class SetFactory<T> extends AbstractObjectFactory<Set>
 
     protected abstract Collection<T> parse(String propertyName,
                                            String propertyValue,
+                                           PropertyContext propertyContext,
                                            ObjectFactory<T> objectFactory);
 
     protected abstract Set<T> createSet();

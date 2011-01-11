@@ -15,6 +15,7 @@
  */
 package be.objectify.led.factory.type;
 
+import be.objectify.led.PropertyContext;
 import be.objectify.led.factory.object.EnumFactory;
 import org.junit.Assert;
 import org.junit.Test;
@@ -39,7 +40,15 @@ public class EnumTypeFactoryTest
         EnumFactory enumFactory = factory.createObjectFactory(new Class[]{ EnumTypeFactoryTestEnum.class },
                                                               null);
         Assert.assertNotNull(enumFactory);
-        Enum e = enumFactory.createObject("propertyName", "A");
+        Enum e = enumFactory.createObject("propertyName",
+                                          "A",
+                                          new PropertyContext()
+                                          {
+                                              public String getValue(String propertyName)
+                                              {
+                                                  return null;
+                                              }
+                                          });
         Assert.assertNotNull(e);
         Assert.assertEquals(EnumTypeFactoryTestEnum.A,
                             e);

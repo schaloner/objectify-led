@@ -49,7 +49,8 @@ public class SetFactoryTest extends AbstractObjectFactoryTest
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
                                                   getField()).createObject("propertyName",
-                                                                           null);
+                                                                           null,
+                                                                           NULL_PROPERTY_CONTEXT);
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof Set);
         Set set = (Set)o;
@@ -61,7 +62,8 @@ public class SetFactoryTest extends AbstractObjectFactoryTest
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
                                                   getField()).createObject("propertyName",
-                                                                           "");
+                                                                           "",
+                                                                           NULL_PROPERTY_CONTEXT);
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof Set);
         Set set = (Set)o;
@@ -73,7 +75,8 @@ public class SetFactoryTest extends AbstractObjectFactoryTest
     {
         Object o = factoryResolver.resolveFactory(getTargetClass(),
                                                   getField()).createObject("propertyName",
-                                                                           "    ");
+                                                                           "    ",
+                                                                           NULL_PROPERTY_CONTEXT);
         Assert.assertNotNull(o);
         Assert.assertTrue(o instanceof Set);
         Set set = (Set)o;

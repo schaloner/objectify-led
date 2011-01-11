@@ -15,6 +15,7 @@
  */
 package be.objectify.led.factory.object;
 
+import be.objectify.led.PropertyContext;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -30,8 +31,16 @@ public abstract class AbstractConstrainedObjectFactoryTest extends AbstractObjec
     {
         Object result = factoryResolver.resolveFactory(getTargetClass(),
                                                        null)
-                .createObject("propertyName",
-                              getInvalidPropertyValue());
+                                       .createObject("propertyName",
+                                                     getInvalidPropertyValue(),
+                                                     new PropertyContext()
+                                                     {
+                                                         public String getValue(String propertyName)
+                                                         {
+                                                             return null;
+                                                         }
+                                                     }
+                                                    );
         Assert.assertNull(result);
     }
 

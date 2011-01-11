@@ -28,11 +28,14 @@ public interface ObjectFactory<T>
      * Creates an object based on propertyValue.  If propertyValue is null
      * or no object can be based on it, null should be returned.
      *
+     * @param propertyName the name of the property
      * @param propertyValue the value of the property
+     * @param propertyContext the context containing all properties
      * @return an object (probably) based on propertyValue, or null
      */
     T createObject(String propertyName,
-                   String propertyValue);
+                   String propertyValue,
+                   PropertyContext propertyContext);
 
     /**
      * Gets the class type this factory produces objects for.

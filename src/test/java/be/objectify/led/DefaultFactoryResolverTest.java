@@ -83,7 +83,8 @@ public class DefaultFactoryResolverTest
         registry.register(new ObjectFactory<String>()
         {
             public String createObject(String propertyName,
-                                       String propertyValue)
+                                       String propertyValue,
+                                       PropertyContext propertyContext)
             {
                 return "foo";
             }
@@ -103,7 +104,17 @@ public class DefaultFactoryResolverTest
                                                                      null);
         Assert.assertNotNull(stringFactory);
         Assert.assertEquals("foo",
-                            stringFactory.createObject("", ""));
+                            stringFactory.createObject("",
+                                                       "",
+                                                       new PropertyContext()
+                                                       {
+                                                           public String getValue(String propertyName)
+                                                           {
+                                                               return null;
+                                                           }
+                                                       }
+                                                      )
+                           );
         Assert.assertEquals(String.class,
                             stringFactory.getBoundClass());
     }
@@ -126,7 +137,8 @@ public class DefaultFactoryResolverTest
         objectFactoryRegistry.register(new ObjectFactory<String>()
         {
             public String createObject(String propertyName,
-                                       String propertyValue)
+                                       String propertyValue,
+                                       PropertyContext propertyContext)
             {
                 return "foo";
             }
@@ -148,7 +160,16 @@ public class DefaultFactoryResolverTest
         Assert.assertNotNull(stringFactory);
         Assert.assertEquals("foo",
                             stringFactory.createObject("",
-                                                       ""));
+                                                       "",
+                                                       new PropertyContext()
+                                                       {
+                                                           public String getValue(String propertyName)
+                                                           {
+                                                               return null;
+                                                           }
+                                                       }
+                                                      )
+                           );
         Assert.assertEquals(String.class,
                             stringFactory.getBoundClass());
 

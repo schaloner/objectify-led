@@ -18,6 +18,7 @@ package be.objectify.led.factory.type;
 import be.objectify.led.FactoryResolver;
 import be.objectify.led.GenericTypes;
 import be.objectify.led.ObjectFactory;
+import be.objectify.led.PropertyContext;
 import be.objectify.led.TypeFactory;
 import be.objectify.led.factory.object.SetFactory;
 import be.objectify.led.util.StringUtils;
@@ -55,6 +56,7 @@ public class SetTypeFactory implements TypeFactory<Set>
         {
             protected Collection parse(String propertyName,
                                        String propertyValue,
+                                       PropertyContext propertyContext,
                                        ObjectFactory objectFactory)
             {
                 List list = new ArrayList();
@@ -63,7 +65,8 @@ public class SetTypeFactory implements TypeFactory<Set>
                     for (StringTokenizer stringTokenizer = new StringTokenizer(propertyValue); stringTokenizer.hasMoreTokens();)
                     {
                         list.add(objectFactory.createObject(propertyName,
-                                                            stringTokenizer.nextToken()));
+                                                            stringTokenizer.nextToken(),
+                                                            propertyContext));
                     }
                 }
                 return list;

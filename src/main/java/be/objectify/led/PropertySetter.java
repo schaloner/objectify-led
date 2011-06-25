@@ -133,23 +133,28 @@ public class PropertySetter
     {
         String propertyValue = getProperty(field);
         boolean finalField = Modifier.isFinal(field.getModifiers());
-        if (!StringUtils.isEmpty(propertyValue) &&
-            (!finalField || configuration.isAllowFinalSetting()))
+
+        String fieldName = field.getAnnotation(Property.class).value();
+
+        if ((!finalField || configuration.isAllowFinalSetting()))
         {
             Class<?> type = field.getType();
             ObjectFactory objectFactory = factoryResolver.resolveFactory(type,
                                                                          field);
             if (objectFactory != null)
             {
-                String fieldName = field.getAnnotation(Property.class).value();
                 objectFactory.validate(fieldName,
                                        propertyValue,
                                        validationFunctions);
-                setValue(target,
-                         field,
-                         objectFactory.createObject(fieldName,
-                                                    propertyValue,
-                                                    propertyContext));
+
+                if (!StringUtils.isEmpty(propertyValue))
+                {
+                    setValue(target,
+                             field,
+                             objectFactory.createObject(fieldName,
+                                                        propertyValue,
+                                                        propertyContext));
+                }
             }
             else
             {

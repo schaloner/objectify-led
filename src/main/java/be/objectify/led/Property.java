@@ -39,4 +39,6 @@ public @interface Property
     String value();
 
     String description() default "";
+
+    String[] meta() default {};
 }

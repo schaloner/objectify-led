@@ -15,6 +15,9 @@
  */
 package be.objectify.led.factory.object;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+
 /**
  * Object factory for Double instances.
  *
@@ -27,7 +30,19 @@ public class DoubleFactory extends AbstractNumberFactory<Double>
      */
     public Double parse(String propertyValue)
     {
-        return Double.parseDouble(propertyValue);
+        Double d;
+
+        try
+        {
+            d = new DecimalFormat().parse(propertyValue).doubleValue();
+        }
+        catch (ParseException e)
+        {
+            throw new NumberFormatException(String.format("Unable to parse [%s] to Double using DecimalFormat",
+                                                          propertyValue));
+        }
+
+        return d;
     }
 
     /**

@@ -15,6 +15,9 @@
  */
 package be.objectify.led.factory.object;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+
 /**
  * Object factory for Float instances.
  *
@@ -27,7 +30,19 @@ public class FloatFactory extends AbstractNumberFactory<Float>
      */
     public Float parse(String propertyValue)
     {
-        return Float.parseFloat(propertyValue);
+        Float f;
+
+        try
+        {
+            f = new DecimalFormat().parse(propertyValue).floatValue();
+        }
+        catch (ParseException e)
+        {
+            throw new NumberFormatException(String.format("Unable to parse [%s] to Float using DecimalFormat",
+                                                          propertyValue));
+        }
+
+        return f;
     }
 
     /**

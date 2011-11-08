@@ -15,6 +15,9 @@
  */
 package be.objectify.led.factory.object;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * Test cases for the default Float object factory.
  *
@@ -40,5 +43,17 @@ public class FloatFactoryTest extends AbstractConstrainedObjectFactoryTest
     protected Object getResult()
     {
         return 41234.234F;
+    }
+
+
+    @Test
+    public void testFloatWithComma()
+    {
+        Object result = factoryResolver.resolveFactory(getTargetClass(),
+                                                       null).createObject("propertyName",
+                                                                          "12,345.678",
+                                                                          NULL_PROPERTY_CONTEXT);
+        Assert.assertEquals((float)12345.678,
+                            result);
     }
 }

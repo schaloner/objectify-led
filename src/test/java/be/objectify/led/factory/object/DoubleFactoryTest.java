@@ -15,6 +15,9 @@
  */
 package be.objectify.led.factory.object;
 
+import org.junit.Assert;
+import org.junit.Test;
+
 /**
  * Test cases for the default Double object factory.
  *
@@ -40,5 +43,16 @@ public class DoubleFactoryTest extends AbstractConstrainedObjectFactoryTest
     protected Object getResult()
     {
         return 12341234.234;
+    }
+
+    @Test
+    public void testDoubleWithComma()
+    {
+        Object result = factoryResolver.resolveFactory(getTargetClass(),
+                                                       null).createObject("propertyName",
+                                                                          "12,3456.789",
+                                                                          NULL_PROPERTY_CONTEXT);
+        Assert.assertEquals(123456.789,
+                            result);
     }
 }

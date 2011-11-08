@@ -17,6 +17,7 @@ package be.objectify.led.factory.object;
 
 import be.objectify.led.DefaultFactoryResolver;
 import be.objectify.led.FactoryResolver;
+import be.objectify.led.NullPropertyContext;
 import be.objectify.led.PropertyContext;
 import org.junit.After;
 import org.junit.Assert;
@@ -30,13 +31,7 @@ import java.lang.reflect.Field;
  */
 public abstract class AbstractObjectFactoryTest
 {
-    protected static final PropertyContext NULL_PROPERTY_CONTEXT = new PropertyContext()
-    {
-        public String getValue(String propertyName)
-        {
-            return null;
-        }
-    };
+    protected static final PropertyContext NULL_PROPERTY_CONTEXT = new NullPropertyContext();
 
     protected FactoryResolver factoryResolver;
 

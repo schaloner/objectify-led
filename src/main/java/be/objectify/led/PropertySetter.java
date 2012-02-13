@@ -85,7 +85,15 @@ public class PropertySetter
     public void process(Class target,
                         ValidationFunction... validationFunctions)
     {
-        Field[] fields = target.getDeclaredFields();
+        Field[] fields;
+        if (target.isAnnotationPresent(InheritProperties.class))
+        {
+            fields = target.getFields();
+        }
+        else
+        {
+            fields = target.getDeclaredFields();
+        }
         for (Field field : fields)
         {
             if (field.isAnnotationPresent(Property.class) &&
@@ -108,7 +116,16 @@ public class PropertySetter
     public void process(Object target,
                         ValidationFunction... validationFunctions)
     {
-        Field[] fields = target.getClass().getDeclaredFields();
+        Field[] fields;
+        Class c = target.getClass();
+        if (c.isAnnotationPresent(InheritProperties.class))
+        {
+            fields = c.getFields();
+        }
+        else
+        {
+            fields = c.getDeclaredFields();
+        }
         for (Field field : fields)
         {
             if (field.isAnnotationPresent(Property.class))

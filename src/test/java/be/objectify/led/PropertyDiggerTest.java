@@ -42,7 +42,6 @@ public class PropertyDiggerTest
     @Test
     public void testExplicitNaturalOrdering()
     {
-
         List<String> propertyNames = PropertyDigger.getPropertyNames(OrderingTestObject.class,
                                                                      PropertyDigger.SortOrder.NATURAL);
         Assert.assertEquals(3,

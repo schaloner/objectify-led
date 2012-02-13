@@ -86,7 +86,15 @@ public final class PropertyDigger
                                                PropertySorter propertySorter)
     {
         List<Property> properties = new ArrayList<Property>();
-        Field[] fields = c.getDeclaredFields();
+        Field[] fields;
+        if (c.isAnnotationPresent(InheritProperties.class))
+        {
+            fields = c.getFields();
+        }
+        else
+        {
+            fields = c.getDeclaredFields();
+        }
         for (Field field : fields)
         {
             if (field.isAnnotationPresent(Property.class))
